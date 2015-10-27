@@ -1,0 +1,43 @@
+div.comments-wraper.answer-wrapper[ng-controller="AnswerCtrl" ng-init="init_answer(#{@item.id},#{@item.adopt_cd.blank?? 0 : @item.adopt_cd})"]
+  ul.comments
+    h3 回答（{{comcount}}）
+    
+    
+    li[ng-repeat="item in answers"]
+      /a[href="/mem/{{item.mem_id}}" target="_blank"]: img.tx[src="#{access_path 'mem'}{{item.mem.photo}}"]
+      div.vote-wrap
+        a.fa.fa-caret-up[role="button"  tabindex="0" ng-click="vote(item[0],'UP',$event)" data-container="body" data-toggle="popover" data-placement="right" data-content="你已经投过票" data-trigger="manual" ]
+        h3 {{item[0].votes}} 
+        a.fa.fa-caret-down[ng-click="vote(item[0],'DOWN',$event)"  data-container="body" data-toggle="popover" data-placement="right" data-content="你已经投过票" data-trigger="click" ]
+        -if ismine
+          a.fa.fa-check[title="采纳为最佳答案" ng-click="adopt(item[0])" ng-class="adopt_cd == item[0].id ? 'on' : ''"]
+      article 
+        p.rawcon[ng-bind-html= "item[0].rawcontent"]
+        
+        div.extra
+          a.left.reply[href="#" data-mem="{{item[0].mem.nc}}" ng-click="reply(item[0])"] 填加评论 
+          span.right
+            a[href="/mem/{{item[0].mem_id}}" target="_blank"]
+              img.tx[ng-src="#{access_path 'mem'}{{item[0].mem.photo}}"]
+              span< {{item[0].mem.nc}} 
+            span 回答于
+            span.time  {{item[0].friendly_time}} 
+          div.clear
+          div.replies 
+            div[ng-repeat="reply in item[1]"] 
+              span[ng-bind-html="reply.rawcontent"]
+              span<> - 
+              a>[href="/mem/{{reply.mem_id}}"] {{reply.mem.nc}}
+              span.time {{reply.friendly_time}}
+
+    =render "layouts/box" 
+  
+  javascript:
+    $(function(){
+      $('.comments-wraper').on('click','.reply',function(){
+        var wraper = $(this).closest('article')
+        $('.comment-editor').appendTo(wraper)
+        //$('#com-txt').val('@' + $(this).attr('data-mem')+'  ').focus()
+        return false;
+      });
+    })

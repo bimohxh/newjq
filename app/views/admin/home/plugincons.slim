@@ -1,0 +1,30 @@
+-content_for :menu
+  =render 'pub_bar'
+-content_for :con
+  
+  table.table#list[ng-controller="PluginconCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 插件
+        th 添加者
+        th 添加时间 
+        th 操作 
+    tbody 
+      tr[ng-repeat="item in items" class="recsts{{item.recsts}}"]
+        td {{item.id}}
+        td: a(href='/plugin/{{item.plugin_id}}' target='_blank') {{item.plugin.title}} 
+        td: a(href='/mem/{{item.mem_id}}' target='_blank') {{item.mem.nc}}  
+        td {{item.created_at}} 
+        td
+          a[href="/admin/plugincon/{{item.id}}/edit"]: i.fa.fa-edit>
+    tfoot
+      tr
+        td[colspan='12'] 
+          span 总记录：
+          span#totalc 加载中.. 
+
+  div#pagenation
+
+
+  input#menubar[type="hidden" value="plugincons"]

@@ -1,0 +1,31 @@
+-content_for :banner
+  div.banner.findpwd
+    div.container
+      h2
+        i.fa.fa-envelope>
+        span 找回密码
+      i find password
+
+=content_for :con
+  =form_tag "/pwd.json",id: 'item_form'
+    div.panel.panel-default.pwd-form
+      div.panel-heading 找回密码
+      div.panel-body
+        div.input-group
+          input.form-control[type="text" placeholder="请输入登陆邮箱" name="email"]
+          span.input-group-btn 
+            button.btn.btn-default[type="submit"] 
+              i.fa.fa-envelope-o
+      div.panel-footer        
+        small.tishi 注意：如果未在收件箱中收到邮件，请查阅垃圾箱，以确定发送邮件成功。      
+  javascript:
+    $(function(){
+      $('#item_form').validate({ 
+        rules:{
+          'email':{required:true}, 
+        },
+        messages:{
+          'email':'', 
+        }
+      });
+    })            

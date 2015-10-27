@@ -1,0 +1,35 @@
+-content_for :title 
+  | jquery前端代码
+
+-content_for :description 
+  | jquery插件库为您提供jquery，div,css,css3,html,JavaScript，html5等网页前端代码。在这里您还可以在浏览器中直接开发前端代码，保存或分享您的代码
+
+-content_for :keywords 
+  | jquery代码,前端代码,网页代码,代码大全,JS,css,css3,JavaScript,HTML,网页制作代码,特效代码,JS特效代码
+
+=content_for :banner
+  div.code-banner
+    img.logo-code[src="/assets/codedesc.png"]
+
+-content_for :con
+  div.row
+    div.col-md-9
+      -cache "code_#{Code.count}_list_#{page}",:expires_in => 10.minutes do
+        =render "code/home_list"
+
+    div.col-md-3.visible-lg-block.visible-md-block
+
+      div.item
+        a.pcode[href="/code/new"]
+          i.fa.fa-pencil-square>
+          span 发布代码
+
+      div.item
+        h3 热门代码
+        ul.list-items
+          -cache "codes_hot" do
+            -code_host.each_with_index do |item,index|
+              li
+                span.index[class="index-#{index+1}"] =index+1
+                a[href='/code/#{item.id}'] =item.title
+ 

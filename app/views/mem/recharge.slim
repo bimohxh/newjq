@@ -1,0 +1,81 @@
+-content_for :con
+  div.title-bar
+    strong
+      span 自动冲值
+      small< 支付完成后即时到帐（推荐）
+  div.mem-con.recharge
+    =form_tag('/pay/order')
+      ul.jqbcz
+        li[data-val='10' data-double = '100'] 
+          img[src='/assets/jqb1.png']
+          img.cover[src='/assets/jqbcover.png']
+        li.on[data-val='30'  data-double = '320'] 
+          img[src='/assets/jqb2.png']
+          img.cover[src='/assets/jqbcover.png']
+        li[data-val='50'  data-double = '560'] 
+          img[src='/assets/jqb3.png']
+          img.cover[src='/assets/jqbcover.png']
+      
+      /div[style="width: 750px;margin: 0 auto;padding: 20px;border: #FFC355 1px solid;background-color: #EFEFEF;font-size: 13px;"] 为了迎接11月11日咱们大多数程序员的节日，本站特别推出11月11日当日的所有充值可获得双倍积分的优惠以免除大家的积分烦恼，即 10元 = 100 jQ币；30 元 = 320 jQ币，50 元 = 560 jQ币。注意：仅限11月11日当天。
+      =hidden_field_tag 'price','30'
+      /div[style="text-align:center; margin-top: 50px;font-size: 17px;"] 
+        /span 实际可得 jQ币： 
+        /span#shiji[style="font-size: 30px; font-weight: bolder;color: #F4871E"] 100
+      p.tip
+        span 温馨提示：支付宝购买不支持手机支付。
+        br
+        span 手机支付用户请用下方 到淘宝网购买方式支付。   
+      button.alipaybtn[type='submit']
+
+  div.title-bar
+    strong 充值卡冲值
+  div.mem-con.recharge
+    a.card-btn[href="http://shop66145472.taobao.com/" target="_blank"] 
+    p.txt-center 到淘宝网购买请先联系卖家，在您支付后我们会发给您一个密钥
+
+    div.mobile-card
+      img[src="/assets/pay-3.png"]
+      p 手机淘宝购买
+
+    //- 手动购买的
+    div.card-wrap
+      h3 充值卡充值
+      =form_tag('/pay/card',id: 'card-form')
+        input.form-control.input-lg.txt-txt[type="text" placeholder="请输入充值卡卡号" name="key"]
+        button#rebtn.btn.btn-primary.btn-lg<[type="submit"] 充值
+
+
+    img#lcpic[src="/assets/zifu.jpg" width="100%"] 
+  
+  javascript:
+    $(function(){ 
+      $('.jqbcz li').click(function(){
+        $(this).addClass('on').siblings().removeClass('on')
+        $('#price').val($(this).attr('data-val')) 
+      })
+
+      $('#card-form').validate({ 
+        rules:{
+          'key':{required:true},
+          
+        },
+        messages:{
+          'key':'',
+        }, 
+        submitHandler: function(form) {
+          $(form).ajaxSubmit({
+            success:function(data){
+              if(data.status){
+                show_tip($("#rebtn"),'success','恭喜你充值成功！');
+              }else{
+                show_tip($("#rebtn"),'danger','充值失败，卡号错误！');
+              } 
+            },
+            error:function(){
+              show_tip($("#rebtn"),'danger','充值失败，卡号错误！');
+            }
+          });
+        }  
+      });
+
+    })

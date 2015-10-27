@@ -1,0 +1,32 @@
+-plugin_list
+
+div.row
+  div.list-typs: ul
+  div.col-md-3.col-sm-4.plugin-item-wrap
+    div.plugin-item
+      div.wrap: a[href="http://e.jikexueyuan.com/html5.html?hmsr=jq22_card_html5_05.27"  target="_blank"]: img[src="/assets/jikexueyuan.png"]
+      article
+        a[href="http://e.jikexueyuan.com/html5.html?hmsr=jq22_card_html5_05.27" target="_blank"]: h4 系统全面的HTML5实例教程
+        small HTML5基础入门，CSS3、jQuery、JS、Bootstrap等开发必备内容，教程+源码。
+      div.foot
+        img.ad-mark[src="/assets/ad.png"]
+  -@items.each do |item| 
+    div.col-md-3.col-sm-4.plugin-item-wrap
+      div.plugin-item
+        div.wrap: a[href="/plugin/#{item.id}" target="_blank"]: img[src="#{access_path 'plugin'}#{item.pic}"]
+        article
+          a[href="/plugin/#{item.id}" target="_blank"]: h4 =item.title
+          small =item.desc
+        div.foot
+          a[href="/mem/#{item.mem.id}"]: img.tx[src="#{access_path 'mem'}#{item.mem.photo}"]
+          -item.typ.split(',').each do |t|
+            small: a>[href="/plugins?typ=#{URI.encode(t)}"] =t
+div#page-plugin.pagenation-lg 
+javascript:
+  $(function(){
+    $("#page-plugin").pagination(#{@count},{
+      items_per_page : 15,
+      current_page : #{page},
+      link_to:"/plugins/__id__#{tagurl params}",
+    }) 
+  })

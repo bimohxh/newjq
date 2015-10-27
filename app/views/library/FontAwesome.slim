@@ -1,0 +1,30 @@
+=render "font_awesome_banner"
+-content_for :con  
+  script[src="/ColorPicker/js/colorpicker.js"] 
+  link[href="/ColorPicker/css/colorpicker.css" rel="stylesheet" media="all"] 
+  div.row.fonts-wrap[ng-controller="FontAwsomeCtrl"]
+    div.col-md-3[ng-repeat="item in items"]
+      i.fa[ng-class="item"]
+      span< {{item}}
+  div#colorSelector
+    div[style="background-color: #000"]      
+  
+  javascript:
+    $(function(){
+      $('#colorSelector').ColorPicker({
+        color: '#000',
+        onShow: function (colpkr) {
+          $(colpkr).fadeIn(500);
+          return false;
+        },
+        onHide: function (colpkr) {
+          $(colpkr).fadeOut(500);
+          return false;
+        },
+        onChange: function (hsb, hex, rgb) {
+          $('#colorSelector div').css('backgroundColor', '#' + hex);
+          $(".fonts-wrap i.fa").css("color", '#' + hex);
+        }
+      });
+    })    
+  

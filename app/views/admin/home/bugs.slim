@@ -1,0 +1,35 @@
+-content_for :menu
+  =render 'site_bar'
+-content_for :con
+  table.table#list[ng-controller="BugCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 插件
+        th BUG类型
+        th 详细说明
+        th[style="width: 100px"] 提交时间
+        th 操作
+      tr
+        th 
+        th: input.form-control[type='text' style='width:50px' ng-blur="search('key')" ng-model="filter_key" placeholder="ID"]
+        th
+        th
+        th
+        th     
+    tbody 
+      tr[ng-repeat="item in items"]
+        td {{item.id}}
+        td: a[href='/plugin/{{item.key}}' target='_blank' ]: i.fa.fa-link
+        td {{item.sdesc}} 
+        td {{item.fdesc}}
+        td {{item.created_at}} 
+        td.operate
+          a[href='#' ng-click="destroy(item.id)" title='删除']: i.fa.fa-trash
+    tfoot
+      tr
+        td[colspan='14'] 
+          span 总记录：
+          span#totalc 加载中..
+  div#pagenation
+  input#menubar[type="hidden" value="bugs"]

@@ -1,0 +1,37 @@
+-content_for :title 
+  | 视频教程-jQuery插件库
+
+-content_for :con
+  div.row
+    div.col-md-9
+      -@items.each do |item|
+        div.video-item
+          img.cover[src="#{item.cover_url}"]
+          h4: a[href="/video/#{item.id}"] =item.title
+          article= item.desc 
+          a[href="/video/#{item.id}"]: i.fa.fa-play-circle
+          div.duration 时长 #{item.duration}
+
+      div#page-video    
+    div.col-md-3
+      div.list-group
+        a.list-group-item[href="#"] 
+          span.badge 32
+          span Web
+
+        a.list-group-item[href="#"]
+          span.badge 1
+          span Design
+
+        a.list-group-item[href="#"] Git
+        a.list-group-item[href="#"] Js
+        a.list-group-item[href="#"] Tools
+        
+          
+
+  javascript:
+    $("#page-video").pagination(#{@count},{
+      items_per_page : 15,
+      current_page : #{@page},
+      link_to:"/videos/__id__",
+    })    

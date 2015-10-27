@@ -1,0 +1,73 @@
+-content_for :title 
+  | #{@item.title}-jQuery插件库
+
+-content_for :description 
+  | #{@item.con[0..50]}
+
+-content_for :keywords 
+  | #{@item.keywords}
+
+
+-content_for :con
+  div.row
+    div.col-md-9
+      div.ask-detail[ng-controller="AskCtrl" ng-init="init(#{@item.id})"]
+        span.bookmark[title="{{isfavor ? '已收藏' : '收藏'}}" ng-click="collect(#{@item.id})"] 
+          i.fa.fa-bookmark[class="{{isfavor}}"]
+          span =@item.collect
+
+        h3.left =@item.title
+        span.ask-state[class="#{@item.status}"] =state_alia @item
+        div.clear
+        div.info
+          a[href="/mem/#{@item.mem_id}" target="_blank"]: img.tx[ng-src="#{access_path 'mem'}#{@item.mem.photo}"]
+          span.nc =@item.mem.nc
+          span 提问于：#{@item.friendly_time}
+          span 查看：#{@item.visit}
+          span 回答：#{@item.answer}
+          span 收藏：#{@item.collect}
+          span 悬赏：#{@item.money}
+          -if @ismyask
+            a[href="/ask/#{@item.id}/edit"]: i.fa.fa-pencil
+        article =raw @item.con
+        -if @ismyask
+          div.ask-footer.txt-right
+            a[href="" data-toggle="modal" data-target="#paybackModal"] 追加悬赏
+
+        /- 追加悬赏
+        div#paybackModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" backdrop="false" keyboard="false"] 
+          div.modal-dialog
+            div.modal-content
+              div.modal-header
+                button[type="button" class="close" data-dismiss="modal" aria-label="Close"]: span[aria-hidden="true"] &times;
+                h4#myModalLabel.modal-title 追加悬赏
+              div.modal-body
+                span 追加金额：
+                input.form-control[type="text" ng-model="rewardnum"]
+
+              div.modal-footer
+                small.left 在未得到满意答案的情况下可以通过追加悬赏来吸引更多的用户来回答
+                button.btn.btn-success[ng-click="reward(#{@item.id})"] 确认追加  
+
+      //- 评论
+      =render "layouts/answer" 
+
+
+    div.col-md-3.visible-lg-block.visible-md-block
+      div.item
+        a.pcode.open-login[href="/ask/new"]
+          i.fa.fa-pencil-square>
+          span 我要提问        
+      / div.item
+      /   h3 相关代码
+      /   ul.list-items
+      /     -@relates.each do |item|
+      /       li
+      /         a[href='/code/#{item.id}'] =item.title
+
+    
+    
+  javascript:
+    SyntaxHighlighter.defaults['auto-links'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;
+    SyntaxHighlighter.all();

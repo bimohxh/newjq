@@ -1,0 +1,24 @@
+div.codes-list
+  div.row
+    -data_list(Code,14).includes(:mem).each_with_index do |item,index|
+      div.col-md-6
+        div.wrap[style="background-color: #{rand_color index}"]
+          a.inner[href="/code/#{item.id}"]
+            span =rand_symb index
+            h4 =item.title 
+          div.infos
+            a[href="/mem/#{item.mem.id}"]: img.tx[src="#{access_path 'mem'}#{item.mem.photo}"]
+            small Time: #{item.created_at}
+            small Hit: #{item.visit}
+
+      
+  div#page-codes.pagenation-lg        
+  iframe#code-preview
+  
+javascript:
+  $("#page-codes").pagination(#{Code.where({:recsts => '0'}).count},{
+    items_per_page : 14,
+    current_page : #{page},
+    link_to:"/codes/__id__",
+  })
+ 

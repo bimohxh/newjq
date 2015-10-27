@@ -1,0 +1,45 @@
+
+//function load_simeditor(){
+//  $('body').append('<script src="/simditor/scripts/module.min.js"><//script>');
+//  $('body').append('<script src="/simditor/scripts/uploader.min.js"><//script>');
+//  $('body').append('<script src="/simditor/scripts/hotkeys.min.js"><//script>');
+//  $('body').append('<script src="/simditor/scripts/simditor.min.js"><//script>');
+//  $('body').append('<link rel="stylesheet" media="all" href="/simditor/styles/simditor.css" //>');
+//}
+script[src="/simditor/scripts/module.js"]
+script[src="/simditor/scripts/uploader.js"]
+script[src="/simditor/scripts/hotkeys.js"]
+script[src="/simditor/scripts/simditor.js"]
+link[rel="stylesheet" media="all" href="/simditor/styles/simditor.css"]
+javascript:
+  function initEditor($ele){
+    //load_simeditor();
+    var editor =  new Simditor({
+      textarea: $ele, 
+      toolbar: [
+        'title',         
+        'bold' ,          
+        'italic',         
+        'underline' ,     
+        'strikethrough' , 
+        'color' ,         
+        'ol' ,            
+        'ul' ,            
+        'blockquote',     
+        'code'  ,         
+        'table' ,         
+        'link' ,          
+        'image' ,         
+        'hr'  ,           
+        'indent',         
+        'outdent' ,       
+        'source' ,        
+      ]
+    });
+    editor.on('valuechanged',function(){
+      $($ele.attr('data-for')).val(editor.getValue()).click();
+    })
+
+    return editor;
+  }
+  

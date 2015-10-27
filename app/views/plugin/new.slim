@@ -1,0 +1,169 @@
+-content_for :con
+  div.panel.panel-default.main
+    div.panel-heading
+      -if params[:action] == 'new'
+        h4 发布插件
+      -else
+        h4 
+          span 编辑插件
+          a<[href="/plugin/#{@item.id}"] =@item.title
+      
+    div.panel-body
+      =form_for(@item,url: @path,html:{id: 'item_form',method: 'post'}) do |item|
+        ul
+          li
+            p 标题
+            =item.text_field :title,{class: 'form-control'}
+
+          li
+            p 简介
+            =item.text_area :desc,{class: 'form-control area'} 
+        
+              
+          -if is_admin?
+            li
+              p 预览图（推荐尺寸为：620*400）
+              =item.text_field :pic,{class:'form-control upload'}     
+              input#upload_pic[type="file" name="filedata" data-post="/upload/pic" data-text="上传图片" data-for="#plugin_pic" data-folder="plugin" data-width="620" data-height="400" data-oss="aliyun"]
+          li 
+            
+          -if is_admin?  
+            li 
+              p
+                span Demo地址【本地上传请务必
+                a<[href='/help#plugin' target="_blank"] 查看规则
+                span 】
+              =item.text_field :demo,{class:'form-control upload'} 
+              input#upload_demo[type="file" name="filedata" data-post="/upload/demo" data-text="上传文件" data-for="#plugin_demo"]
+
+          li
+            p 下载地址【请上传压缩文件，大小限制：15M】
+            =item.text_field :download,{class:'form-control upload'}
+            input#upload_down[type="file" name="filedata" data-post="/upload/pluginzip" data-text="上传文件" data-for="#plugin_download"]
+
+          li
+            p 下载所需JQ币（0-10）
+            =item.text_field :cost,{class:'form-control'}
+
+
+          li
+            p 官网地址
+            =item.text_field :website,{class:'form-control', placeholder:'无官网则不填'}
+
+          li
+            p 浏览器兼容（最低兼容的IE浏览器）
+            div.item_outer
+              select#plugin_browser[name='plugin[browser]' style="width: 80px"]
+                -(6..11).each do |i|
+                  -if i == @item.browser.to_i
+                    option[value="#{i}" selected] IE#{i}
+                  -else
+                    option[value="#{i}"] IE#{i}
+
+          -if is_admin? 
+            li
+              p 插件视频（视频ID以“,”隔开）
+              =item.text_field :videos,{class:'form-control'}
+
+          li
+            p 关键字
+            =item.text_field :keywords,{class: 'form-control',placeholder: '多个关键字以“,”隔开'}
+
+          li
+            p 分类
+            ul#typ-lists
+              -Refcd.current('PROOTTYP').each do |refcd|
+                li
+                  span =refcd.sdesc
+                  ul
+                    -Refcd.key('PTYP',refcd.key).each do |subitem|
+                      -if @item.typ and @item.typ.split(',').include?(subitem.sdesc)
+                        li.lable-item.on[data-root="#{refcd.sdesc}" data-typ="#{subitem.sdesc}"]
+                          span  =subitem.sdesc   
+                      -else
+                        li.lable-item[data-root="#{refcd.sdesc}" data-typ="#{subitem.sdesc}"]
+                          span  =subitem.sdesc 
+            =item.hidden_field :typ
+            =item.hidden_field :root_typ           
+                        
+
+          li
+            p 正文
+            textarea#editor[placeholder="这里输入内容" data-for="#plugin_con"] =@item.con
+            =item.hidden_field :con
+            =item.hidden_field :id
+          li
+            input[type="hidden" value="#{@item.id}" name="id"]
+            button.btn.btn-primary.right[type="submit"] 提  交
+      
+    div.panel-footer.txt-right
+      span 发布插件，提供详细说明和使用方法，额外奖励5-20 jQ币
+  
+  -if is_admin? and params[:action] == 'edit'
+    div.panel.panel-default[ng-controller="PluginOperCtrl" ng-init="init('#{@item.recsts}')"]
+      div.panel-heading 审核操作
+      div.panel-body
+        div.input-group[style="margin-bottom: 20px;"]
+          input.form-control[type="text"  placeholder="删除原因，可空" ng-model="reason"]
+          span.input-group-btn
+            button.btn.btn-danger[ng-click="destroy(#{@item.id})"] 删除
+
+        
+        div.input-group[ng-show="recsts == '1'"]
+          span.input-group-btn 
+            button.btn.btn-default 奖励金额
+          input.form-control[type="text"   ng-model="award"]
+          span.input-group-btn
+            button.btn.btn-success[ng-click="check(#{@item.id})"] 审核通过
+         
+        button.btn.btn-danger[ng-click="reset(#{@item.id})" ng-show="recsts == '0'"] 设为不可见
+  =render "layouts/simditor"
+  =stylesheet_link_tag  "/select2/select2"
+  =javascript_include_tag "/select2/select2.min"
+
+  javascript:
+    $(function(){ 
+      var editor = initEditor($('#editor'));
+      $("#plugin_browser").select2();
+       
+
+      $('#item_form').validate({ 
+        rules:{
+          'plugin[title]':{required:true},
+          'plugin[download]':{required:true},
+          'plugin[desc]':{required:true},
+          'plugin[keywords]':{required:true},
+          
+        },
+        messages:{
+          'plugin[title]':'',
+          'plugin[download]':'',
+          'plugin[desc]':'',
+          'plugin[keywords]':'',
+        }, 
+      });
+
+      $('#item_form').submit(function(){
+        var ls = _.map($("#typ-lists .lable-item.on"),function(m){
+          return $(m).attr("data-typ");
+        }).join(",");
+
+        var ls2 = _.uniq(_.map($("#typ-lists .lable-item.on"),function(m){
+          return $(m).attr("data-root");
+        })).join(",");
+        $('#plugin_root_typ').val(ls2);
+        $('#plugin_typ').val(ls);
+      })
+
+
+
+      //上传
+      $('#upload_pic,#upload_demo,#upload_down').each(function(){
+         uplaod_form($(this));
+      })
+     
+
+      $("#typ-lists .lable-item").click(function(){
+        $(this).toggleClass("on")
+      })
+    }) 

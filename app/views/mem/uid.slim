@@ -1,0 +1,26 @@
+-content_for :con
+  /div.title-bar
+    /strong 账号绑定 
+  div.mem-con
+    div.row.login-three
+      div.col-md-4.col-sm-4
+        i.fa.fa-qq
+        p QQ登陆
+      div.col-md-4.col-sm-4.on
+        i.fa.fa-weibo
+        p 新浪微博登陆
+      div.col-md-4.col-sm-4
+        i.fa.fa-github
+        p Github登陆
+
+  div.title-bar
+    strong 邮箱绑定
+  div.mem-con
+    span 邮箱：
+    input.form-control[type="text" value="#{current_mem.email}"]
+    button.btn.btn-default< 
+      i.fa.fa-envelope-o>
+      span 绑定验证
+
+
+  input#mem-on[type="hidden" value="uid"]

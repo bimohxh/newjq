@@ -1,0 +1,67 @@
+-content_for :con
+  div.item
+    h3
+      span #{who @isme}的发布
+    div.row.sum-list 
+      div
+        span 插件
+        a.num<[href="/mem/plugin/#{@mem.id}/pubed"] =@mem.plugin
+
+      div
+        span 代码
+        a.num<[href="/mem/code/#{@mem.id}/pubed"] =@mem.code
+
+      div
+        span 视频
+        a.num<[href="/mem/video/#{@mem.id}/pubed"] =@mem.video
+
+      div
+        span 提问
+        a.num<[href="/mem/ask/#{@mem.id}/pubed"] =@mem.ask
+
+      div
+        span 回答
+        a.num<[href="/mem/ask/#{@mem.id}/answers"] =@mem.answer        
+  
+  div.item
+    h3
+      span #{who @isme}的收藏
+    div.row.sum-list.favor 
+      div
+        span 插件
+        a.num<[href="/mem/plugin/#{@mem.id}/favors"] =@mem.favorp
+      div
+        span 代码
+        a.num<[href="/mem/code/#{@mem.id}/favors"] =@mem.favorc
+      div
+        span 视频
+        a.num<[href="/mem/video/#{@mem.id}/favors"] =@mem.favorv
+      div
+        span 问答
+        a.num<[href="/mem/ask/#{@mem.id}/favors"] =@mem.favorask  
+      
+      /-if @isme        
+      /  div.item
+      /    h3
+      /      span 我的jQ币
+      /      a[href="/mem/record"]: i.fa.fa-cny.right
+      /    div.row.sum-list.jqb 
+      /      div.col-md-4
+      /        div
+      /          span 收入
+      /          span.num< =current_mem.plugin
+
+      /      div.col-md-4
+      /        div
+      /          span 充值
+      /          span.num< =current_mem.plugin
+
+      /      div.col-md-4
+      /        div
+      /          span 支出
+      /          span.num.zc< =current_mem.code  
+
+      /      div.col-md-12
+      /        div
+      /          span 余额
+      /          span.num.ye< =current_mem.code       

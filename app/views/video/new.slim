@@ -1,0 +1,96 @@
+-content_for :con
+  div.panel.panel-default.main
+    div.panel-heading: h4 发布视频
+    div.panel-body
+      =form_for(@item,url: @path,html:{id: 'item_form',method: 'post'}) do |item|
+        ul
+          li
+            p 标题
+            =item.text_field :title,{class: 'form-control'}
+
+          li
+            p 简介
+            =item.text_area :desc,{class: 'form-control area'}
+
+          li
+            p 视频上传（请将视频时间控制在10分中内，大小控制在30M以内）
+            =item.text_field :src,{class:'form-control'} 
+            input#upload_video[type="file" name="filedata" data-post="/upload/video" data-text="上传视频" data-for="#video_src" data-folder="video"]
+
+          -if is_admin?  
+            li   
+              p 预览版视频
+              =item.text_field :preview,{class:'form-control'}
+              a#cutvideo[href='#']    
+                i.fa.fa-cut<
+                span< 切割视频
+              span#cutmsg<[style='display:none'] 切割中，请稍后....
+
+          -if is_admin?    
+            li 
+              p 视频封面
+              =item.text_field :cover,{class:'form-control'}
+              input#upload_cover[type="file" name="filedata" data-post="/upload/thumbnail" data-text="上传封面" data-for="#video_cover" data-folder="video"]  
+
+          li
+            p 时长（格式：分:秒，如 07:49）
+            =item.text_field :duration,{class:'form-control'} 
+
+          li
+            p 观看所需JQ币（0-10）
+            =item.text_field :cost,{class:'form-control'}     
+
+          li
+            p 标签
+            //=item.text_field :keywords,{class: 'form-control'} 
+            select#tags_select.form-control[multiple="multiple" name="video[keywords][]"]
+              -@item.keywords.split(',').each do |tag|
+                option[value="#{tag}" selected] =tag 
+              -(Tag.where({:typcd=>'VIDEO'}).pluck('nm') - @item.keywords.split(',')).each do |tag|
+                option[value="#{tag}"] =tag
+          
+          li
+            p 视频说明
+            textarea#editor[placeholder="这里输入内容"  data-for="#video_con"] =@item.con
+            =item.hidden_field :con 
+            =item.hidden_field :id
+
+          li
+            button.btn[type='submit'] 提  交 
+        div.notice
+    div.panel-footer.txt-right
+      
+  
+    =render "layouts/simditor"
+    =stylesheet_link_tag  "/select2/select2.min"
+    =javascript_include_tag "/select2/select2.min"
+
+    javascript:
+      var editor = initEditor($('#editor')) 
+
+      $(function(){
+        $("#tags_select").select2({
+          tags: true,
+          tokenSeparators: [',', ' ']
+        });
+
+        $('#item_form').validate({ 
+          rules:{
+            'video[title]':{required:true}, 
+            'video[desc]':{required:true},
+            'video[keywords]':{required:true},
+            'video[src]':{required:true},
+            'video[duration]':{required:true},
+            
+          },
+          messages:{
+            'video[title]':'', 
+            'video[desc]':'',
+            'video[keywords]':'',
+            'video[src]':'',
+            'video[duration]':''
+          }, 
+        });
+      })
+
+      uplaod_form($('#upload_video,#upload_cover'))

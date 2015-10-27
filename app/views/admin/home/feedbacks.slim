@@ -1,0 +1,28 @@
+-content_for :menu
+  =render 'site_bar'
+-content_for :con
+  table.table#list[ng-controller="FeedbackCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 联系方式
+        th 会员ID
+        th 反馈内容
+        th 提交时间
+        th 操作
+    tbody 
+      tr[ng-repeat="item in items"]
+        td {{item.id}}
+        td {{item.sdesc}}
+        td {{item.val1}} 
+        td {{item.fdesc}}
+        td {{item.created_at}} 
+        td.operate
+          a[href='#' ng-click="destroy(item.id)" title='删除']: i.fa.fa-trash 
+    tfoot
+      tr
+        td[colspan='14'] 
+          span 总记录：
+          span#totalc 加载中..
+  div#pagenation
+  input#menubar[type="hidden" value="feedbacks"]

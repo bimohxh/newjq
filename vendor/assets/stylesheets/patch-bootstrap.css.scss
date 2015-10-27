@@ -1,0 +1,62 @@
+body{font-family: /* "Microsoft Jhenghei", */"Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif!important;}
+.navbar-inverse,.navbar-collapse{ border-color:#323436; }
+.navbar-inverse{
+  border-radius: 0;margin-bottom: 0; background-color: #000; border: 0;
+  
+}
+.navbar-brand{padding-top: 10px;}
+.badge{background-color: #F37163}
+.navbar-nav > li >  a{color: #B5BDC0; height: 60px; padding-top: 20px;transition: all 0.5s ease-in;}
+
+.navbar-nav > li >  a:hover{color: #FFF; background-color: #323436}
+.btn{border-radius:0;}
+.container{margin-left:auto!important;margin-right:auto!important}
+.form-control{display: inline-block;width: 300px;border-radius: 0px; line-height: normal;}
+.form-control.area{height: 100px;resize: none;}
+.form-control.upload{padding-right: 100px; float: left;}
+.form-control.error {
+  border-color: #e9322d;
+  -webkit-box-shadow: 0 0 6px #FCAEAC;;
+     -moz-box-shadow: 0 0 6px #FCAEAC;;
+          box-shadow: 0 0 6px #FCAEAC;;
+}
+.pagination > .active.prev > span,.pagination > .active.next > span{color: #428bca;background-color: white;}
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus{
+ border-color: #dddddd; border-bottom: #FF0000 1px solid; color:#FF0000;background-color: #FFFFFF;
+}
+.pagination > li > a, .pagination > li > span{}
+.pagination > .active.prev > span, .pagination > .active.next > span{border-color: #dddddd}
+.nonum .pagination > li{display: none}
+.nonum .pagination > li.prev,.nonum .pagination > li.next{display: inline-block;}
+.select2-container .select2-choice{background-image: none!important}
+.select2-container .select2-choice .select2-arrow{background-image: none!important}
+.select2-search input{background-image: none!important}
+p{margin: 0 0 5px;}
+
+.navbar-collapse{
+  &.collapse.in,&.collapsing{
+    background-color: #323436; border-bottom: rgb(236, 63, 22) 2px solid;
+    &>ul{
+      &>li{
+        display: inline-block
+      }
+      li.nologin{
+        display: inline-block!important;
+        .btn-group{margin-top: 0}
+      }
+    }
+  } 
+}
+
+.list-group-item{border: 1px solid #EEE;}
+button{outline: none!important}
+a.list-group-item:hover, a.list-group-item:focus {
+  text-decoration: none;
+  //color: #D82929;
+  background-color: #FFF;border-left: Red 1px solid;
+}
+.list-group-item.on{
+  color: #D82929; cursor:default;text-decoration: none;
+}
+
+.alert{margin: 5px 0 }

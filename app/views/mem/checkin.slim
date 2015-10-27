@@ -1,0 +1,17 @@
+-content_for :con
+  div.mem-con
+    div.item[ng-controller="CheckinCtrl" ng-init="init()"]
+      h3
+        span 每日签到
+        small.right 今日签到 #{checked_num} 人
+      div.row.check-in[ng-controller="InfoCtrl" ng-init="account_list(1,3)"] 
+        button.btn.btn-primary[ng-click="checkin()" ng-hide="ischeckin"] 签 到
+        button.btn.btn-success[ng-show="ischeckin"] 已签到
+        p 
+          span 你已连续签到 {{days}} 天， 
+          span[ng-hide="days < 3"] 今日签到可获得 1 jQ币，坚持额！
+          span[ng-show="days < 3"] 还差 {{3 - days}} 天即可获得 1 jQ币，努力额！
+
+      div.alert.alert-info[style="margin-top: 50px;"] 
+        strong>   积分规则：
+        span 开始连续3天签到可以获得1jQ币，随后每天连续签到获得1jQ币，注意整个过程都是连续签到才有效。

@@ -1,0 +1,218 @@
+=render "font_awesome_banner"
+-content_for :con  
+  h3.page-header 基本用法
+  div.row
+    div.col-md-3.col-sm-4
+      i.fa.fa-camera-retro>
+      span fa-camera-retro
+    div.col-md-9.col-sm-8
+      p 你可以将 Font Awesome 图标以CSS前缀 <code>fa</code> 加上图标 name 放到任何地方。Font Awesome 是被设计来用在行内元素中的（一般我们为了简洁用在<code>i</code>标签中，而从语义上来讲，用在<code>span</code>中更为准确）
+      pre[class="brush:html;toolbar:false"]
+        |
+          &lt;i class=&quot;fa fa-camera-retro&quot;&gt;&lt;/i&gt; fa-camera-retro
+      div.alert.alert-success
+        ul.fa-ul
+          li
+            i.fa.fa-info-circle.fa-lg.fa-li
+            span 如果你改变图标外层容器的字体大小，图标大小也会改变，这种情况同样适用于颜色，阴影，以及任何继承的CSS样式。
+
+  h3.page-header 大小
+  div.row
+    div.col-md-3.col-sm-4
+      p
+        i.fa.fa-camera-retro.fa-lg
+        span< fa-lg
+      p
+        i.fa.fa-camera-retro.fa-2x
+        span< fa-2x
+      p
+        i.fa.fa-camera-retro.fa-3x
+        span< fa-3x
+      p
+        i.fa.fa-camera-retro.fa-4x
+        span< fa-4x
+      p
+        i.fa.fa-camera-retro.fa-5x
+        span< fa-5x
+    div.col-md-9.col-sm-8
+      p 为了增加图标相对于其外层容器的大小，使用<code>fa-lg</code>(增加33%)，<code>fa-2x</code>，<code>fa-3x</code>，<code>fa-4x</code>，或者<code>fa-5x</code>
+      pre[class="brush:html;toolbar:false"]
+        |
+          &lt;i class="fa fa-camera-retro fa-lg"&gt;&lt;/i&gt; fa-lg
+          &lt;i class="fa fa-camera-retro fa-2x"&gt;&lt;/i&gt; fa-2x
+          &lt;i class="fa fa-camera-retro fa-3x"&gt;&lt;/i&gt; fa-3x
+          &lt;i class="fa fa-camera-retro fa-4x"&gt;&lt;/i&gt; fa-4x
+          &lt;i class="fa fa-camera-retro fa-5x"&gt;&lt;/i&gt; fa-5x
+      
+      div.alert.alert-success
+        ul.fa-ul
+          li
+            i.fa.fa-exclamation-triangle.fa-lg.fa-li
+            span 如果你的图标顶部或底部被削掉了，请确保你有足够的行高。
+
+
+  h3.page-header 固定宽度
+  div.row
+    div.col-md-3.col-sm-4
+      div.list-group
+        a.list-group-item[href="#"]
+          i.fa.fa-home.fa-fw 
+          span< Home
+        a.list-group-item[href="#"]
+          i.fa.fa-book.fa-fw
+          span< Library
+        a.list-group-item[href="#"]
+          i.fa.fa-pencil.fa-fw
+          span< Applications
+        a.list-group-item[href="#"]
+          i.fa.fa-cog.fa-fw
+          span< Settings
+
+    div.col-md-9.col-sm-8
+      p 使用 <code>fa-fw</code> 去设置图标为固定的宽度，通常使用于要让多个不同宽度的图标对齐的情况下，尤其在列表里面。
+    pre[class="brush:html;toolbar:false"]
+      |
+        &lt;div class="list-group"&gt;
+          &lt;a class="list-group-item" href="#"&gt;&lt;i class="fa fa-home fa-fw"&gt;&lt;/i&gt; Home&lt;/a&gt;
+          &lt;a class="list-group-item" href="#"&gt;&lt;i class="fa fa-book fa-fw"&gt;&lt;/i&gt;Library&lt;/a&gt;
+          &lt;a class="list-group-item" href="#"&gt;&lt;i class="fa fa-pencil fa-fw"&gt;&lt;/i&gt; Applications&lt;/a&gt;
+          &lt;a class="list-group-item" href="#"&gt;&lt;i class="fa fa-cog fa-fw"&gt;&lt;/i&gt;Settings&lt;/a&gt;
+        &lt;/div&gt;
+
+
+  h3.page-header 列表
+  div.row
+    div.col-md-3.col-sm-4
+      ul.fa-ul
+        li
+          i.fa-li.fa.fa-check-square
+          span List icons
+        li
+          i.fa-li.fa.fa-check-square
+          span can be used
+
+        li
+          i.fa-li.fa.fa-spinner.fa-spin
+          span as bullets
+        li
+          i.fa-li.fa.fa-square
+          span in lists
+
+
+    div.col-md-9.col-sm-8
+      p 使用 <code>fa-ul</code> 和 <code>fa-li</code> 能够很轻易地替换无序列表的项目符号
+      pre[class="brush:html;toolbar:false"]
+        |
+          &lt;ul class="fa-ul"&gt;
+            &lt;li&gt;&lt;i class="fa-li fa fa-check-square"&gt;&lt;/i&gt;List icons&lt;/li&gt;
+            &lt;li&gt;&lt;i class="fa-li fa fa-check-square"&gt;&lt;/i&gt;can be used&lt;/li&gt;
+            &lt;li&gt;&lt;i class="fa-li fa fa-spinner fa-spin"&gt;&lt;/i&gt;as bullets&lt;/li&gt;
+            &lt;li&gt;&lt;i class="fa-li fa fa-square"&gt;&lt;/i&gt;in lists&lt;/li&gt;
+          &lt;/ul&gt; 
+
+  h3.page-header 边框
+  div.row
+    div.col-md-3.col-sm-4
+      p 
+        i.fa.fa-quote-left.fa-3x.pull-left.fa-border
+        span …tomorrow we will run faster, stretch out our arms farther… And then one fine morning—
+        So we beat on, boats against the current, borne back ceaselessly into the past.
+      
+
+    div.col-md-9.col-sm-8
+      p 使用 <code>fa-border</code> 和 <code>pull-right</code> 或者 <code>pull-left</code> 能够轻易设置文章的图标
+      pre[class="brush:html;toolbar:false"]
+        |
+          &lt;i class="fa fa-quote-left fa-3x pull-left fa-border"&gt;&lt;/i&gt; 
+          ...tomorrow we will run faster, stretch out our arms farther...
+          And then one fine morning— So we beat on, boats against the
+          current, borne back ceaselessly into the past.
+
+  h3.page-header 动画
+  div.row
+    div.col-md-3.col-sm-4
+      p
+        i.fa.fa-spinner.fa-spin.fa-3x.fa-fw.margin-bottom
+        i.fa.fa-circle-o-notch.fa-spin.fa-3x.fa-fw.margin-bottom
+        i.fa.fa-refresh.fa-spin.fa-3x.fa-fw.margin-bottom
+        i.fa.fa-cog.fa-spin.fa-3x.fa-fw.margin-bottom
+        i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw.margin-bottom
+    div.col-md-9.col-sm-8
+      p 使用 <code>fa-spin</code> 样式可以让任何图标旋转起来，使用 <code>fa-pulse</code> 让图标旋转8步，<code>fa-spinner</code>，<code>fa-refresh</code>，<code>fa-cog</code> 这些图标效果更好。
+      pre[class="brush:html;toolbar:false"]
+        |
+          &lt;i class="fa fa-spinner fa-spin"&gt;&lt;/i&gt;
+          &lt;i class="fa fa-circle-o-notch fa-spin"&gt;&lt;/i&gt;
+          &lt;i class="fa fa-refresh fa-spin"&gt;&lt;/i&gt;
+          &lt;i class="fa fa-cog fa-spin"&gt;&lt;/i&gt;
+          &lt;i class="fa fa-spinner fa-pulse"&gt;&lt;/i&gt;
+
+
+  h3.page-header 旋转和翻转
+  div.row
+    div.col-md-3.col-sm-4
+      p[style="font-size: 18px;"] 
+        i.fa.fa-shield
+        span< normal
+      p[style="font-size: 18px;"] 
+        i.fa.fa-shield.fa-rotate-90
+        span< fa-rotate-90
+      p[style="font-size: 18px;"] 
+        i.fa.fa-shield.fa-rotate-180
+        span< fa-rotate-180
+      p[style="font-size: 18px;"] 
+        i.fa.fa-shield.fa-rotate-270
+        span< fa-rotate-270
+      p[style="font-size: 18px;"] 
+        i.fa.fa-shield.fa-flip-horizontal
+        span< fa-flip-horizontal
+      p[style="font-size: 18px;"] 
+        i.fa.fa-shield.fa-flip-vertical
+        span<  fa-flip-vertical
+
+    div.col-md-9.col-sm-8
+      p 为了能任意地旋转和翻转图标，使用 <code>fa-rotate-*</code> 和 <code>fa-flip-*</code> 样式。
+      pre[class="brush:html;toolbar:false"]
+        |
+          &lt;i class="fa fa-shield"&gt;&lt;/i&gt; normal&lt;br&gt;
+          &lt;i class="fa fa-shield fa-rotate-90"&gt;&lt;/i&gt; fa-rotate-90&lt;br&gt;
+          &lt;i class="fa fa-shield fa-rotate-180"&gt;&lt;/i&gt; fa-rotate-180&lt;br&gt;
+          &lt;i class="fa fa-shield fa-rotate-270"&gt;&lt;/i&gt; fa-rotate-270&lt;br&gt;
+          &lt;i class="fa fa-shield fa-flip-horizontal"&gt;&lt;/i&gt; fa-flip-horizontal&lt;br&gt;
+          &lt;i class="fa fa-shield fa-flip-vertical"&gt;&lt;/i&gt; icon-flip-vertical
+  h3.page-header 组合叠加
+  div.row
+    div.col-md-3.col-sm-4
+      span.fa-stack.fa-lg
+        i.fa.fa-square-o.fa-stack-2x
+        i.fa.fa-twitter.fa-stack-1x
+      span< fa-twitter on fa-square-o
+
+      br
+      
+      span.fa-stack.fa-lg
+        i.fa.fa-circle.fa-stack-2x
+        i.fa.fa-flag.fa-stack-1x.fa-inverse 
+      span< fa-flag on fa-circle
+
+      br
+      
+      span.fa-stack.fa-lg
+        i.fa.fa-square.fa-stack-2x
+        i.fa.fa-terminal.fa-stack-1x.fa-inverse 
+      span< fa-terminal on fa-square
+
+      br
+      
+      span.fa-stack.fa-lg
+        i.fa.fa-camera.fa-stack-1x
+        i.fa.fa-ban.fa-stack-2x.text-danger
+
+      span< fa-ban on fa-camera
+
+    div.col-md-9.col-sm-8
+  
+  javascript:
+    SyntaxHighlighter.defaults['auto-links'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;
+    SyntaxHighlighter.all();

@@ -1,0 +1,12 @@
+-content_for :con
+  div[ng-controller="MsgCtrl" ng-init="list(1,10)"]
+    /div.title-bar
+    /  strong 我的消息
+    div.mem-con
+      ul.msg-list 
+        li[ng-repeat="item in items" ng-class="item.status"]
+          span {{item.title}}
+          a[href="{{item.link}}"] 查看
+      div#pag-msgs 
+  input#mem-on[type="hidden" value="msg"]
+

@@ -1,0 +1,38 @@
+div.comments-wraper[ng-controller="CommentCtrl" ng-init="init_comment(#{@comment.to_json})"]
+  ul.comments
+    h3 讨论这个项目（{{comcount}}）
+    
+    
+    li[ng-repeat="item in comments"]
+      a[href="/mem/{{item.mem_id}}" target="_blank"]: img.tx[ng-src="#{access_path 'mem'}{{item.mem.photo}}"]
+      article 
+        a[href="/mem/{{item.mem_id}}" target="_blank"] {{item.mem.nc}} 
+        p[ng-bind-html= "item.rawcontent"]
+        span {{item.friendly_time}} 
+        a.reply[href="#" data-mem="{{item.mem.nc}}"] 回复 
+        i.del.fa.fa-trash[ng-show="item.ismine" ng-click="destroy(item)"] 
+   
+    =render "layouts/box" 
+  
+
+  javascript:
+    $(function(){
+      $('.comments-wraper').on('click','.reply',function(){
+        var wraper = $(this).closest('article')
+        $('.comment-editor').appendTo(wraper)
+        $('#com-txt').val('@' + $(this).attr('data-mem')+'  ').focus()
+        return false;
+      });
+
+      //$('#body-in').on('click','.fa-expand',function(){
+      //  $(this).removeClass('fa-expand').addClass('fa-compress');
+      //  $('#body-in').addClass('fullscreen');
+      //  $('#com-txt').height($(window).height() - 40);
+      //}).on('click','.fa-compress',function(){
+      //  $(this).removeClass('fa-compress').addClass('fa-expand');
+      //  $('#body-in').removeClass('fullscreen');
+      //  $('#com-txt').height('100%');
+      //});
+      
+      
+    })

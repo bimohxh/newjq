@@ -1,0 +1,43 @@
+div.more-menus
+  ul
+    li: a[href='/about']
+      i.fa.fa-user
+      span 关于我们
+    li: a[href='/contact'] 
+      i.fa.fa-comments
+      span 联系我们
+    li: a[href='/disclaimer']
+      i.fa.fa-exclamation-triangle
+      span 免责申明
+    li: a[href='/link'] 
+      i.fa.fa-link
+      span 友情链接
+  i.fa.fa-caret-down.ico   
+    / p
+    /   small Copyright © 2012-2013 jQuery插件库Version 3.0.0. 备案号:沪ICP备13043785号-1.本站内容受著作权法保护。个人网站转载请遵循知识共享署名-非商业性使用 2.5 中国大陆许可协议"进行许可
+    / p
+    /   small 建议使用Chrome浏览器或IE9以上版本浏览本网站以达到最佳的浏览效果
+    / p
+    /   a[href="http://weibo.com/jq22" rel="nofollow" title="jQuery官方微博" target="_blank"]: i.fa.fa-weibo>
+    /   a[href="http://jq.qq.com/?_wv=1027&amp;k=R5CbVT" rel="nofollow" title="jQuery插件库官方群"]: i.fa.fa-qq
+    /   a[href="http://weibo.com/jq22" rel="nofollow" title="jQuery官方微博" target="_blank"]: i.fa.fa-weixin>
+footer.footer
+  ul.main-menus
+    li.more: a[href="#"]
+      span  更多
+      i.fa.fa-caret-up<
+    li: a[href='/feedback'] 在线反馈
+    li: a[href='/help'] 帮助中心
+    li: span  Copyright © 2012-2015 jQuery插件库Version 3.0.0. 备案号:沪ICP备13043785号-1.
+  img.logo[src="/assets/logo.png"]  
+javascript:
+  var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+  document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fb3a3fc356d0af38b811a0ef8d50716b8' type='text/javascript'%3E%3C/script%3E"));
+
+  $(function(){
+    $(".footer .more,.more-menus").mouseenter(function(){
+      $(".more-menus").stop().slideDown();
+    }).mouseleave(function(){
+      $(".more-menus").stop().slideUp();
+    });
+  })

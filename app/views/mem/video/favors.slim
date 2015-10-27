@@ -1,0 +1,20 @@
+-content_for :con
+  div.mem-sub-menus
+    ul
+      li.on
+        a[href=""] #{who @isme}收藏的
+      li
+        a[href="/mem/video/#{@mem.id}/pubed"] #{who @isme}发布的
+
+  div.mem-con[ng-controller="FavorCtrl" ng-init="init('video',#{@mem.id})"]
+    div.row 
+      div.col-md-4.col-sm-6[ng-repeat="item in items"] 
+        div.faver-item
+          img.thumbile[src="#{access_path 'video'}{{item.pic}}"]
+          div.cover {{item.title}}
+          div.title: a[href="/video/{{item.id}}" target="_blank"] {{item.title}}
+          -if @isme
+            i.fa.fa-close[title="删除" ng-click="destroy(item)"]
+
+    div#pag-favors
+  input#mem-on[type="hidden" value="videos"]

@@ -1,0 +1,30 @@
+title = (_title = yield :title) =='' ? 'jQuery插件库-收集最全最新最好的jQuery插件' : _title
+meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"]
+meta[http-equiv="X-UA-Compatible" content="IE=edge"]
+meta[name="description" content="#{(_description = yield :description) =='' ? '本站致力于收集jQuery插件和提供各种jQuery特效的详细使用方法,在线预览，jQuery插件下载及教程' : _description}"]
+meta[name="keywords" content="#{(_keywords = yield :keywords) =='' ? 'jQuery,jQuery特效,jQuery ui,jQuery插件,jQuery 教程,css3,网页特效,JS特效' : _keywords}"]
+link[rel="shortcut icon" href="/site.ico"]
+
+javascript:
+  var Rails = {
+    config: {
+      source_access_path : "<%= Rails.application.config.source_access_path %>"
+    },
+    access_path: function(folder){
+      return this.config.source_access_path + folder + '/';
+    },
+    islogin: #{@is_login},
+    mem_id: #{session[:mem] || 'undefined'}
+  }
+
+= stylesheet_link_tag    "application", media: "all"
+= javascript_include_tag "application"
+
+
+/[if IE]
+  =javascript_include_tag "modernizr.min"
+  =javascript_include_tag "css3-mediaqueries"
+  =javascript_include_tag "html5"
+  =javascript_include_tag "respond.min"
+=yield :header
+= csrf_meta_tags    

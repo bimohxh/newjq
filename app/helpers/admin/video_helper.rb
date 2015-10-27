@@ -1,0 +1,2 @@
+module Admin::VideoHelper
+end

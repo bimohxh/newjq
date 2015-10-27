@@ -1,0 +1,39 @@
+-content_for :title 
+  | #{@item.title}-jQuery插件库
+
+-content_for :description 
+  | #{@item.desc}
+
+-content_for :keywords 
+  | #{@item.keywords},视频教程,#{@item.title}
+
+-content_for :con
+  div.video-detail[ng-controller="VideoCtrl" ng-init="is_collect(#{@item.id})"] 
+    div
+      div.topper 
+        a[href="/mem/#{@item.mem.id}"]: img.tx[src="#{access_path 'mem'}#{@item.mem.photo}"]
+        h4 =@item.title
+        i.fa.fa-eye: span =@item.visit
+        i.favor-btn.fa>[ng-class="isfavor ? 'fa-heart' : 'fa-heart-o'" ng-click="collect(#{@item.id})"]: span =@item.collect
+
+
+      video#my_video.video-js.vjs-default-skin[controls preload="none" width="100%" height="500" poster="/assets/video.jpg" data-setup="{}" autoplay]
+        source#sourcesrc[src="#{@src}" type='video/mp4']
+    div.con
+      h4 视频资料
+      article =raw @item.con
+
+    //- 评论
+    =render "layouts/comment"
+
+      
+  
+  =stylesheet_link_tag  "/video-js/video-js"
+  =javascript_include_tag "/video-js/video"  
+
+  javascript:
+    $(function(){
+      videojs("my_video").ready(function(){
+        myPlayer = this;      
+      });
+    })

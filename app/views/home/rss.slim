@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+rss[version="2.0" xmlns:blogChannel="http://backend.userland.com/blogChannelModule"] 
+  channel
+    title jQuery插件库-收集最全最新最好的jQuery插件
+    link http://www.jq22.com
+    description 本站致力于收集jQuery插件和提供各种jQuery特效的详细使用方法,在线预览，jQuery插件下载及教程
+    language zh-cn
+    webMaster 1246996371@qq.com
+    generator Rails4.0
+    copyright Copyright © 2012-2013 jQuery插件库Version 3.0.0. 
+    docs http://www.jq22.com/rss.xml
+    image 
+      url =@items[0].pic_url
+      title =@items[0].title
+      link ="http://www.jq22.com/jquery-info#{@items[0].id}"
+
+    -@items.each do |item|  
+      item
+        title =item.title
+        author =raw "<![CDATA[#{item.mem.nc}]]>"
+        link ="http://www.jq22.com/jquery-info#{item.id}"
+        pubDate =raw "<![CDATA[#{item.created_at}]]>"
+        description =raw "<![CDATA[#{item.desc}]]>"
+        category =raw "<![CDATA[#{item.typ}]]>" 
+

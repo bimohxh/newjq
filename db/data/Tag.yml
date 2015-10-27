@@ -1,0 +1,78 @@
+data:
+  - nm: 幻灯片
+    num: 100
+
+  - nm: 分页
+    num: 80
+
+  - nm: 游戏
+    num: 15 
+
+  - nm: 视频
+    num: 20
+
+  - nm: 滑块
+    num: 10
+
+  - nm: 表单验证
+    num: 30
+
+  - nm: 上传
+    num: 50
+
+  - nm: 表单美化
+    num: 55
+
+  - nm: 富文本编辑器
+    num: 50
+
+  - nm: 布局
+    num: 40
+
+  - nm: 动画
+    num: 40
+
+  - nm: 工具提示
+    num: 30
+
+  - nm: 背景
+    num: 30
+
+  - nm: 弹出层
+    num: 60
+
+  - nm: 自动完成
+    num: 25
+
+  - nm: 搜索
+    num: 20
+
+  - nm: UI
+    num: 40
+
+  - nm: 拖放
+    num: 20
+
+  - nm: 日期选择
+    num: 20
+
+  - nm: 拾色器
+    num: 20
+
+  - nm: 延迟加载
+    num: 20
+
+  - nm: Tabs
+    num: 20
+
+  - nm: 地图
+    num: 10
+
+  - nm: 树形菜单
+    num: 20  
+
+  - nm: 手风琴
+    num: 20   
+
+  - nm: 导航
+    num: 25      

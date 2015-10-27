@@ -1,0 +1,76 @@
+-content_for :banner
+  div.banner.tools
+    div.container
+      h2
+        i.fa.fa-briefcase>
+        span 圆角生成
+      i just design your app online
+
+-content_for :con
+  div.row#radiuScope[ng-controller="ToolRaiusCtrl"]
+    div.col-md-6 
+
+      div.slider-wrap
+        span 左上角 
+        input.form-control.number<>[type="text" ng-model="paras.leftTop"]
+        span px
+        div.slider
+
+      div.slider-wrap
+        span 右上角 
+        input.form-control.number<>[type="text" ng-model="paras.rightTop"]
+        span px
+        div.slider 
+
+      div.slider-wrap
+        span 右下角 
+        input.form-control.number<>[type="text" ng-model="paras.rightBottom"]
+        span px
+        div.slider
+
+      div.slider-wrap
+        span 左下角 
+        input.form-control.number<>[type="text" ng-model="paras.leftBottom"]
+        span px
+        div.slider  
+
+      
+      h3 最终代码  
+      pre.code border-radius: {{paras.leftTop}}px {{paras.rightTop}}px {{paras.rightBottom}}px {{paras.leftBottom}}px;
+               -moz-border-radius:  {{paras.leftTop}}px {{paras.rightTop}}px {{paras.rightBottom}}px {{paras.leftBottom}}px;
+               -webkit-border-radius:  {{paras.leftTop}}px {{paras.rightTop}}px {{paras.rightBottom}}px {{paras.leftBottom}}px;
+
+    div.col-md-6
+      div.radius-preview[style="border-radius: {{paras.leftTop}}px {{paras.rightTop}}px {{paras.rightBottom}}px {{paras.leftBottom}}px;-moz-border-radius:  {{paras.leftTop}}px {{paras.rightTop}}px {{paras.rightBottom}}px {{paras.leftBottom}}px;-webkit-border-radius:  {{paras.leftTop}}px {{paras.rightTop}}px {{paras.rightBottom}}px {{paras.leftBottom}}px;"]
+
+      ul.preset
+        li[data-val="[50,50,50,50]" ng-click="setpara(200,200,200,200)"] 
+        li[data-val="[25,0,25,0]" ng-click="setpara(100,0,100,0)"]
+        li[data-val="[50,0,0,0]" ng-click="setpara(200,0,0,0)"]
+        li[data-val="[0,50,0,0]" ng-click="setpara(0,200,0,0)"]
+        li[data-val="[25,25,25,0]" ng-click="setpara(100,100,100,0)"]
+        li[data-val="[50,50,0,0]" ng-click="setpara(200,200,0,0)"]
+
+
+  script[src="http://libs.baidu.com/jqueryui/1.10.2/jquery-ui.min.js"]
+  link[href="/jquery-ui/jquery-ui.css" media="all" rel="stylesheet"]
+
+  javascript:
+    $(function(){
+      $('.slider').slider({
+        max: 200,
+        slide: function( event, ui ) { 
+          $(ui.handle).closest('.slider-wrap').find('.form-control.number').val(ui.value).change();
+        }
+      }); 
+      $(".form-control.number").change(function(){
+        $(this).closest('.slider-wrap').find(".slider" ).slider( "value", $(this).val());
+      })
+
+      $('ul.preset li').each(function(){
+        eval("var para = "+$(this).attr('data-val'));
+        $(this).attr('style',"border-radius: "+para[0]+"px "+para[1]+"px "+para[2]+"px "+para[3]+"px")
+      }).click(function(){
+        $(".form-control.number").change();
+      })
+    })

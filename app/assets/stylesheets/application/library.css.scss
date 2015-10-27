@@ -1,0 +1,29 @@
+
+.fabanner {
+  background-color: #1fa67a;  border-top: 1px solid #34a782;  border-bottom: 1px solid #1b926c;  margin-bottom: 0;  padding: 70px 0;  color: #FFF;
+  h1 {
+    font-size: 60px;  text-shadow: 4px 3px 0px #1d9d74, 9px 8px 0px rgba(0, 0, 0, 0.15);  
+    i.fa { margin-right: 20px; }
+  }
+  a{color: #FFF}
+}
+
+.fonts-wrap {
+  font-size: 15px;
+  & > div { padding: 10px 0; }
+   i.fa { margin-right: 5px; }
+}
+
+a.down-btn {
+  text-decoration: none;  font-size: 20px;  color: #FFF;  display: inline-block;  float: right;  background-color: #51D1E2;  padding: 10px 20px;
+  small{font-size: 10px;}
+}
+
+#colorSelector{position:relative;width:36px;height:36px;background:url(/ColorPicker/images/select.png); position: fixed;right: 10px;top: 40%;}
+#colorSelector div{position:absolute;top:3px;left:3px;width:30px;height:30px;background:url(/ColorPicker/images/select.png) center;}
+
+.page-header{
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eeeeee;
+}

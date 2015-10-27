@@ -1,0 +1,130 @@
+div.container.con-wrap
+  div.row.mem-bar
+    div.col-md-3.col-sm-4
+      div.tx-wrap
+       img.tx[src="#{access_path 'mem'}#{@mem.photo}"]
+        strong.tx-info 
+          span =@mem.nc
+          -if @mem.mem_info.gender == 'F'
+            i.fa.fa-venus<
+          -else
+            i.fa.fa-mars<
+
+        p 
+          i.fa.fa-map-marker>
+          span =@mem.mem_info.city_alia
+
+        p 第 #{@mem.id} 位会员   
+
+        div.clear
+
+      div.tx-wrap  
+        ul.follow-top
+          li.first: a[href="/mem/#{@mem.id}/following"]
+            span 关注
+            br
+            span =@mem.following
+          li: a[href="/mem/#{@mem.id}/followers"]  
+            span 粉丝
+            br
+            span =@mem.followers
+        
+        
+
+       
+        /p 加入时间：2014-08-23   
+        -if (current_mem and !@isme)
+          div.follow-btns[ng-controller="FollowCtrl" ng-init="isfollow(#{@mem.id})"]
+            button.btn[ng-class="followstatus ? 'btn-success' : 'btn-default'" ng-click="update(#{@mem.id})"]
+              i.fa[ng-class="followstatus ? 'fa-check' : 'fa-plus'"]
+              span< {{followstatus ? '已关注' : '加关注'}}
+            button.btn.btn-default< 发私信
+
+      
+      / div.tx-wrap
+      /   div.sum
+      /     span.nm 插件
+      /     span.num =@mem.plugin
+      /   div.sum
+      /     span.nm 代码
+      /     span.num =@mem.code
+      /   div.sum
+      /     span.nm 视频
+      /     span.num =@mem.video
+          
+      -if @isme
+        div.tx-wrap
+          span JQ币：
+          span.money =current_mem.integral
+          a.menu[href="/mem/record"] 记录
+          a.menu[href="/mem/orders"] 订单 
+          a.menu[href="/mem/recharge"] 充值
+
+        /div.tx-wrap.check-in
+          /button.btn.btn-default 签 到
+          /p 你已签到 20 天
+          /p 还差 2 天可获得 1 jQ币 
+          /p 签到即可再获得 1 jQ币 
+
+      / div.tx-wrap
+      /   ul.mem-menu
+      /     -if @isme
+      /       li[data-on="msg"]
+      /         i.fa.fa-bell
+      /         a[href="/mem/msg"] 我的消息
+
+      /     li[data-on="favors"]
+      /       i.fa.fa-folder-open
+      /       a[href="/mem/#{@mem.id}/favors"] #{who @isme}的收藏
+      /     li[data-on="pubeds"]
+      /       i.fa.fa-file-text
+      /       a[href="/mem/#{@mem.id}/pubeds"] #{who @isme}的发布
+
+      /     -if @isme
+      /       li[data-on="pub"]
+      /         i.fa.fa-edit
+      /         a[href="/mem/pplugin"] 发布资源（赢币）
+
+      /       li[data-on="ask"]
+      /         i.fa.fa-adn
+      /         a[href="/mem/ask"] 我要提问
+                
+      /       li[data-on="info"]
+      /         i.fa.fa-list-alt
+      /         a[href="/mem/info"] 个人信息
+      /       li[data-on="uid"]
+      /         i.fa.fa-qq
+      /         a[href="/mem/uid"] 帐号绑定 
+    div.col-md-9.col-sm-8
+      div.mem-top-menus
+        ul
+          - if @isme
+            li[data-on="msg"]
+              a[href="/mem/msg"] 消息
+            
+          li[data-on="plugins"]
+            a[href="/mem/plugin/#{@mem.id}/favors"] 插件
+
+          li[data-on="asks"]
+            a[href="/mem/ask/#{@mem.id}/pubed"] 问答  
+          
+          li[data-on="codes"]
+            a[href="/mem/code/#{@mem.id}/favors"] 代码
+          
+          li[data-on="videos"]
+            a[href="/mem/video/#{@mem.id}/favors"] 视频  
+          
+          - if @isme
+            li[data-on="info"]
+              a[href="/mem/info"] 资料
+          - if @isme    
+            li[data-on="uid"]
+              a[href="/mem/uid"] 账号
+
+          li.checkin
+            i.fa.fa-sign-in>
+            a[href="/mem/checkin"] 每日签到
+
+      div.clear         
+              
+      =yield :con

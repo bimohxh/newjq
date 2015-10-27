@@ -1,0 +1,9 @@
+doctype html
+html[ng-app="siteApp"]
+  head
+    =render 'layouts/header'
+  body
+    =render 'layouts/top'
+    =yield :banner
+    =render "layouts/mem_bar"
+    =render 'layouts/footer'

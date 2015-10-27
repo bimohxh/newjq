@@ -1,0 +1,94 @@
+-content_for :banner
+  div.banner.help
+    div.container
+      h2
+        i.fa.fa-th-large>
+        span 帮助中心
+      i help center
+
+=content_for :con
+  div.row
+    div.col-md-3
+      div.list-group
+        a.list-group-item[href="#"] 上传资源
+        a.list-group-item[href="#"] jQ币
+        a.list-group-item[href="#"] 充值
+        a.list-group-item[href="#"] 签到规则
+    div.col-md-9
+      div.help-con
+        h3 
+          i.fa.fa-book>
+          span 上传资源
+
+        h4 1、上传插件
+        div 用户可以将自己平时在项目中用到的jQuery插件发布到我们的平台上，鼓励用户发布原创的jQuery插件，学习去写自己的插件对用户本身也是一个技能的提升。
+        small 注意：请尽量添加上完整的使用方法，确保demo能正常运行。
+        
+        h4 2、上传代码
+        div 如果你有一些能实现某个特定功能的代码段，可以共享给其它用户，比如说，我有一段实现元素屏幕居中的代码，我可以发布出来，如果其它用户在使用你的代码时发现有bug，就会给你提出来，这样有助于大家的共同进步。
+        small 
+        
+        h4 3、上传视频
+
+        h3 
+          i.fa.fa-book>
+          span jQ币
+
+        h4 1、什么是jQ币
+        div jQ币是用于本站的站内虚拟积分，不具有实际的交易属性。
+
+        h4 2、有什么用
+        div 可用于购买需要jQ币下载的资源，不排除未来还有其他用途。
+
+        h4 3、如何获取
+        div 
+          span 1、通过
+          a<>[href="/mem/pplugin" target="_blank"] 上传资源
+          span 来获取一定数量的jQ币，具体比例参考：
+        p: table.table 
+          tr
+            th 发布插件
+            th 发布代码
+            th 发布视频
+          tr
+            td 5 jQ币 
+            td 10 jQ币 
+            td 30 jQ币  
+        p 如果你发布的资源质量很高，还会获取额外的jQ币奖励。以上是发布资源，后台审核通过后即可获得的最低jQ币，除此之外，如果你的资源设定了需要jQ币才能下载，则用户的每次下载你都将获得 所需jQ币 / 2 的金额。
+        p 2、可以给某个插件填加用法来获取一定数量的jQ币，同样也是根据你的内容质量来决定你最终获取的金额。
+        div 
+          span 3、通过
+          a<>[href="/mem/recharge" target="_blank"] 充值
+          span 来获取。本站充值所获取的收入将用于服务器和其他方面的开支。
+        p 4、每日连续签到也可获取一定的jQ币，具体获取的数量详见签到规则。  
+        
+        h4 4、为什么需要jQ币下载
+        div 本站创立之初的所有资源都是直接可以下载的。搭建网站、收集资源、写使用方法，所有这些工作都让站长感觉这样累下去是不能持续的。
+        div 考虑很久之后，我们决定引入jQ币来维持网站的良性发展，一方面可以通过部分会员的资助来抵消服务器的消费。最重要的方面是能够让更多的用户参与进来扩大网站的资源收集和分享。
+        p 这也是我们亲自见证了现在的插件资源数量有了很大的提升，也满足了更多的用户的需求。
+
+        h3 
+          i.fa.fa-book>
+          span 签到规则
+
+        p: table.table 
+          tr
+            th 签到天数
+            th 获得jQ币
+            
+          tr
+            td 3 
+            td 1
+          tr
+            td +1 
+            td 1
+        small 注释：首次连续签到 3 天可获得 1 jQ币，接下来每签到 1 天即可获得 1 jQ币。              
+  
+  javascript:
+    $(function(){
+      $('.list-group-item').click(function(){
+        var ele = $('.help-con > h3:eq(' + $(this).index() + ')');
+        $('html,body').animate({scrollTop: ele.offset().top-10});
+      })
+    })
+        

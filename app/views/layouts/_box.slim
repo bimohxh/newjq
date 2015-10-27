@@ -1,0 +1,18 @@
+div.comment-editor
+  div[ng-class="editorstate"]
+    ul.toolbar
+      li: i.fa.fa-code[ng-click="insert_code()"]
+      li.right[ng-click="switch_state()"]: i.fa[class="fa-{{editorstate}}"]
+     
+    div.com: textarea#com-txt.login-show-focus[placeholder="" ng-model="comment_con" style="height: {{editorheight}}"]
+  div.foot
+    -if @is_login 
+      img.tx.login-mem-tx[src="#{access_path 'mem'}#{current_mem.photo}"]
+    -else
+      span.nologin 
+        span 请
+        a.open-login<>[href="#"] 登陆
+        span 或
+        a.open-singin<>[href="#"] 注册
+        span 后发表评论
+    button.btn.btn-success.right.login-show-click[ng-click="comment_add()"] 确 定    

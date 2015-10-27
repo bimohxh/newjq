@@ -1,0 +1,16 @@
+-content_for :con
+  div.title-bar
+    strong JQ币历史记录
+  div.mem-con[ng-controller="RecordCtrl" ng-init="list(1,10)"]
+    table.table[cellpading='0' cellspacing='0' style="width: 100%"]
+        tr
+          th 金额
+          th 备注
+          th 交易时间
+          th 余额 
+        tr[ng-repeat="item in items"]
+          td {{item.num > 0 ? '+' + item.num : item.num}}
+          td {{item.remark}}
+          td {{item.created_at}}
+          td {{item.balance}}
+    div#page-record  

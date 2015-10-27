@@ -1,0 +1,57 @@
+-content_for :menu
+  =render 'mem_bar'
+-content_for :con
+  =form_tag('/admin/integral/save', method: :post,id:"inform")
+    ul#msg-wrap
+      li
+        span 会员
+        input.form-control<[type="text" name="mid" style="width: 100px" placeholder="会员ID"]
+
+      li
+        span 金额
+        input.form-control<[type="number" name="num" style="width: 100px" ]
+
+      li
+        span 备注
+        textarea.form-control.area<[type="text" name="remark"]
+
+      li
+        span 密码
+        input.form-control<[type="password" name="pwd" placeholder="管理员密码"]
+
+      li: button.btn[type='submit'] 提  交
+
+  input#menubar[type="hidden" value="recordoper"]
+
+  javascript:
+    $(function(){
+      $('#inform').validate({ 
+        rules:{
+          'mid':{required:true},
+          'num':{required:true}, 
+          'pwd':{required:true},           
+        },
+        messages:{
+          'mid':'',
+          'num':'',
+          'pwd':'',
+        }, 
+        submitHandler: function(form) {
+          $(form).ajaxSubmit({
+            success:function(data){
+              if(data.status){
+                show_tip($("#msg-wrap"),'success','积分操作成功！');
+                $('.form-control').val(''); 
+              }else{
+                show_tip($("#msg-wrap"),'danger','积分操作失败，' + data.msg);
+              } 
+            },
+            error:function(){
+              show_tip($("#msg-wrap"),'danger','积分操作失败，' + data.msg);
+            }
+          });
+        }  
+      });
+    })
+
+

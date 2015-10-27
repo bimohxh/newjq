@@ -1,0 +1,47 @@
+-content_for :menu
+  =render 'pub_bar'
+-content_for :con
+  table.table#list[ng-controller="PluginCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 标题
+        th 作者
+        th 访问量 
+        th 收藏
+        th 评论
+        th Demo
+        th 下载
+        th 积分
+        th 下载次数
+        th 浏览器
+        th 添加时间 
+        th 操作 
+    tbody 
+      tr[ng-repeat="item in items" class="recsts{{item.recsts}}"]
+        td {{item.id}}
+        td: a(href='/plugin/{{item.id}}' target='_blank') {{item.title}} 
+        td: a(href='/mem/{{item.mem_id}}' target='_blank') {{item.mem.nc}} 
+        td {{item.visit}} 
+        td {{item.collect}} 
+        td {{item.comment}}
+        td: a[href='/plugin/{{item.id}}/demo' target='_blank' title='Demo']: i.fa.fa-link
+        td: a[href='/plugin/{{item.id}}/download' target='_blank' title='下载']: i.fa.fa-download
+        td {{item.cost}}
+        td {{item.downnum}} 
+        td {{item.browser}}  
+        td {{item.created_at}} 
+        td
+          a[href="/plugin/{{item.id}}/edit"]: i.fa.fa-edit>
+          /a[href="#" data-id="{{item.id}}" ng-click="destroy(item.id)"]: i.fa.fa-trash<>
+          /a[href='#' ng-click="reset(item.id)" title='点击切换状态']: i.fa.fa-ban
+          /a[href='#' title='发送消息' ng-click="notify(item.mem_id)" data-toggle="modal" data-target="#myModal"]: i.fa.fa-bell<
+    tfoot
+      tr
+        td[colspan='12'] 
+          span 总记录：
+          span#totalc 加载中.. 
+  div#pagenation
+
+
+  input#menubar[type="hidden" value="plugins"]

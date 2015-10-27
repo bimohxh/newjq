@@ -1,0 +1,30 @@
+-content_for :menu
+  =render 'site_bar'
+-content_for :con
+  table.table#list[ng-controller="SearchCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 关键字
+        th 搜索时间
+        th 操作
+      tr
+        th 
+        th: input.form-control[type='text' style='width:150px' ng-blur="search('key')" ng-model="filter_key"]
+        th
+        th  
+    tbody 
+      tr[ng-repeat="item in items"]
+        td {{item.id}}
+        td {{item.key}} 
+        td {{item.created_at}} 
+        td.operate
+          a[href='#' ng-click="destroy(item.id)" title='删除']: i.fa.fa-trash
+     
+    tfoot
+      tr
+        td[colspan='14'] 
+          span 总记录：
+          span#totalc 加载中..
+  div#pagenation
+  input#menubar[type="hidden" value="searchs"]

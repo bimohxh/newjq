@@ -1,0 +1,69 @@
+-content_for :menu
+  =render 'mem_bar'
+-content_for :con
+  table.table#list[ng-controller="MemCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 头像
+        th 昵称
+        th 性别 
+        th 邮箱
+        th 插件
+        th 代码段
+        th 视频教程
+        th 积分
+        th 注册时间 
+        th 操作
+    tr
+        th: input.form-control[type='text' style='width:50px'  ng-blur="search('id')" ng-model="filter_id"]
+        th  
+        th: input.form-control[type='text' style='width:150px'  ng-blur="search('nc')" ng-model="filter_nc"]
+        th
+        th: input.form-control[type='text' style='width:150px'  ng-blur="search('email')" ng-model="filter_email"]
+        th
+        th
+        th 
+        th 
+        th 
+        th
+    tbody 
+      tr[ng-repeat="item in items" class="recsts{{item.recsts}}"]
+        td {{item.id}} 
+        td: a[href='/mem/{{item.id}}' target='_blank']: img.tx[src="#{access_path 'mem'}{{item.photo}}"]
+        td: a[href='/mem/{{item.id}}' target='_blank'] {{item.nc}} 
+        td {{item.gender == 'F' ? '女' : '男'}}
+        td {{item.email}} 
+        td {{item.plugin}} 
+        td {{item.code}}  
+        td {{item.video}}
+        td {{item.integral}}  
+        td {{item.created_at}} 
+        td
+          a[href='' title='封号' ng-click="reset(item.id)" ]: i.fa.fa-ban
+          a<[href='' title='删除' ng-click="destroy(item.id)" ]: i.fa.fa-trash
+    tfoot
+      tr
+        td[colspan='14'] 
+          span 总记录：
+          span#totalc 加载中..
+
+
+  div#pagenation
+  input#menubar[type="hidden" value="mems"]
+
+  javascript:
+    $(function(){
+        $('.stxt').change(function(){
+            var _where = {}
+            if($('#txtnc').val() != ''){
+                _where = {nc: $('#txtnc').val()}
+            }
+            if($('#txtid').val() != ''){
+               _.extend(_where,{id: parseInt($('#txtid').val())}) 
+            }
+            angular.element($('#list')).scope().get_list(1,_where)
+        })
+    })
+
+  

@@ -1,0 +1,37 @@
+-content_for :menu
+  =render 'pub_bar'
+-content_for :con
+  table.table#list[ng-controller="CodeCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 标题
+        th 作者
+        th 访问量 
+        th 收藏
+        th 评论 
+        th 添加时间 
+        th 操作
+    tbody 
+      tr[ng-repeat="item in items" class="recsts{{item.recsts}}"]
+        td {{item.id}}
+        td: a(href='/code/{{item.id}}' target='_blank') {{item.title}} 
+        td: a(href='/mem/{{item.mem_id}}' target='_blank') {{item.mem.nc}} 
+        td {{item.visit}} 
+        td {{item.collect}} 
+        td {{item.comment}} 
+        td {{item.created_at}}  
+        td
+          a[href="/code/{{item.id}}/edit"]: i.fa.fa-edit>
+          /a[href="#" data-id="{{item.id}}" ng-click="destroy(item.id)"]: i.fa.fa-trash<>
+          /a[href='#' ng-click="reset(item.id)" title='点击切换状态']: i.fa.fa-ban
+          /a[href='#' title='发送消息' ng-click="notify(item.mem_id)" data-toggle="modal" data-target="#myModal"]: i.fa.fa-bell<
+    tfoot
+      tr
+        td[colspan='8'] 
+          span 总记录：
+          span#totalc 加载中..
+  div#pagenation
+
+
+  input#menubar[type="hidden" value="codes"]

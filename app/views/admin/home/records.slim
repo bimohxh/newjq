@@ -1,0 +1,40 @@
+-content_for :menu
+  =render 'mem_bar'
+-content_for :con
+  table.table#list[ng-controller="RecordCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 金额
+        th 会员
+        th 余额
+        th 时间
+        th 备注
+        th 操作
+      tr
+        th
+        th
+        th: input.form-control[type='text' style='width:100px'  ng-blur="search('mem_id')" ng-model="filter_mem_id" placeholder="会员ID"] 
+        th
+        th
+        th
+        th   
+    tbody 
+      tr[ng-repeat="item in items" class="recsts{{item.recsts}}"]
+        td {{item.id}}
+        td {{item.num}}
+        th: a[href='/mem/{{item.mem.id}}' target='_blank'] {{item.mem.nc}} 
+        td {{item.balance}} 
+        td {{item.created_at}}  
+        td {{item.remark}}  
+        td.operate
+          a(href='#' ng-click="remove(item.id)" title='删除'): i.glyphicon.glyphicon-trash
+    tfoot
+      tr
+        td[colspan='14'] 
+          span 总记录：
+          span#totalc 加载中..
+
+
+  div#pagenation
+  input#menubar[type="hidden" value="records"]

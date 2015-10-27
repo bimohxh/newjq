@@ -1,0 +1,37 @@
+-content_for :banner
+  div.banner.feedback
+    div.container
+      h2
+        i.fa.fa-file-text>
+        span 在线反馈
+      i feedback online
+
+=content_for :con 
+  =form_for(Doc.new,url: "/doc/feedback",html:{id: 'item_form'}) do |item|
+    div.panel.panel-default.feedback-form 
+      div.panel-heading 反馈表单 
+      div.panel-body
+        h4 你的信息
+        =item.text_field :sdesc,{class: 'form-control',placeholder: "请填写正确的联系方式（QQ或邮箱）以便我们及时联系到您"}
+        
+        h4 你遇到的问题
+        =item.text_area :fdesc,{class: 'form-control area',placeholder: "请描述你遇到的网站使用方面的问题，技术问题请加群"}
+        =item.hidden_field :typ,{value: 'SITEQ'}
+
+      div.panel-footer
+        button.btn.btn-success.right 提 交 
+        div.clear
+
+  javascript:
+    $(function(){
+      $('#item_form').validate({ 
+        rules:{
+          'doc[sdesc]':{required:true}, 
+          'doc[fdesc]':{required:true}, 
+        },
+        messages:{
+          'doc[sdesc]':'', 
+          'doc[fdesc]':'',
+        }, 
+      });
+    })

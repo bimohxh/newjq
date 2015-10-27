@@ -1,0 +1,57 @@
+-content_for :con
+  div.panel.panel-default.main
+    div.panel-heading
+      -if params[:action] == 'new'
+        h4 我要提问
+      -else
+        h4 
+          span 更新提问
+          a<[href="/ask/#{@item.id}"] =@item.title
+    div.panel-body
+      =form_for(@item,url: @path,html:{id: 'item_form',method: 'post'}) do |item|
+        ul
+          li
+            p 标题
+            =item.text_field :title,{class: 'form-control'}
+
+          
+          li
+            p 问题详细说明
+            textarea#editor[placeholder="这里输入内容" data-for="#ask_con"] =@item.con
+            =item.hidden_field :con 
+            =item.hidden_field :id
+            =item.hidden_field :recsts,value: '0'
+
+          li
+            p 悬赏（高悬赏有助于吸引更多用户来回答额）
+            =item.text_field :money,{class: 'form-control', disabled: !(params[:action] == 'new')}
+
+
+          li
+            p 标签（便于用户搜索到你的问题，多个标签以“,”隔开）
+            =item.text_field :keywords,{class: 'form-control'}
+          
+
+          li
+            input[type="hidden" value="#{@item.id}" name="id"]
+            button.btn.btn-success.right[type="submit"] 提  交
+    div.panel-footer.txt-right
+      
+  
+  =render "layouts/simditor"
+  
+  javascript:
+    var editor = initEditor($('#editor'));
+    $(function(){
+
+      $('#item_form').validate({ 
+        rules:{
+          'ask[title]':{required: true}, 
+          'ask[money]':{required: true,number: true,min: 0},
+        },
+        messages:{
+          'ask[title]':'', 
+          'ask[money]':'',
+        }, 
+      });
+    });  

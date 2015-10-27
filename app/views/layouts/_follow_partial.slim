@@ -1,0 +1,11 @@
+div.row.follow-list
+  div.col-md-6.col-sm-6[ng-repeat = "item in items"]
+    a[href="/mem/{{item.id}}" target="_blank"]
+      img.tx[src="#{access_path 'mem'}{{item.photo}}"]
+    strong {{item.nc}}
+    p 关注：{{item.following}}   粉丝：{{item.followers}}
+
+    -if current_mem
+      button.btn[ng-class="item.followstatus ? 'btn-success' : 'btn-default'" ng-click="update(item.id,item)" ng-show="#{current_mem.id} != item.id"]
+        i.fa[ng-class="item.followstatus ? 'fa-check' : 'fa-plus'"]
+        span< {{item.followstatus ? '已关注' : '加关注'}}

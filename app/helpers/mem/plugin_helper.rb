@@ -1,0 +1,2 @@
+module Mem::PluginHelper
+end

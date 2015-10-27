@@ -1,0 +1,78 @@
+-content_for :title 
+  | jquery前端代码
+
+-content_for :description 
+  | jquery插件库为您提供jquery，div,css,css3,html,JavaScript，html5等网页前端代码。在这里您还可以在浏览器中直接开发前端代码，保存或分享您的代码
+
+-content_for :keywords 
+  | jquery代码,前端代码,网页代码,代码大全,JS,css,css3,JavaScript,HTML,网页制作代码,特效代码,JS特效代码
+  
+-content_for :con
+  div.row
+    div.col-md-9
+      div.code-banner
+        i.fa.fa-terminal
+        span< Share your code,change the world
+      div.code-list
+        ul
+          -@items.each do |item|
+            li
+              h4: a[href="/code/#{item.id}"] =item.title
+              a[href="/mem/#{item.mem.id}" target="_blank"]: img.tx[src="#{access_path 'mem'}#{item.mem.photo}"]
+              article =item.desc
+              div.extra
+                span 发布时间：2014-12-21
+                ul
+                  -item.keywords.split(',').each do |t|
+                    li: a[href="#"] =t
+              div.info
+                div.in1[class="#{item.comment > 0 ? 'on' : ''}"]
+                  span =item.comment
+                  br
+                  span< 评论
+                div[class="#{item.collect > 0 ? 'on' : ''}"]
+                  span =item.collect
+                  br
+                  span< 收藏
+        div#page-codes        
+
+    div.col-md-3.visible-lg-block.visible-md-block
+      div.item
+        h3 热门代码
+        ul.list-items
+          -@hosts.each_with_index do |item,index|
+            li
+              span.index[class="index-#{index+1}"] =index+1
+              a[href='/code/#{item.id}'] =item.title
+
+      div.item
+        h3 最新评论
+        ul.float.tags
+          li: a[href='#'] 幻灯片
+          li: a[href='#'] 表单
+          li: a[href='#'] 表格
+          li: a.on[href='#'] 灯箱
+          li: a[href='#'] 分页插件
+
+      div.item
+        h3 作者排名
+        ul.float.list-mem
+          -@authors.each do |item|
+            li
+              a[href="/mem/#{item.mem.id}" target="_blank"]: img.tx[src="#{access_path 'mem'}#{item.mem.photo}"]
+              span =item.mem.nc
+              p: small #{item.mem.followers} 粉丝 
+              span.code-num 
+                span =item.mem.code 
+                br
+                span 代码
+                
+                
+
+
+  javascript:
+    $("#page-codes").pagination(#{@count},{
+      items_per_page : 15,
+      current_page : #{@page},
+      link_to:"/codes/__id__",
+    })  

@@ -1,0 +1,29 @@
+-content_for :menu
+  =render 'pub_bar'
+-content_for :con
+  ol.breadcrumb
+    li: a[href="/admin"] 首页
+    li: a[href="/admin/plugins"] 发布
+    li: a[href="/admin/plugincons"] 插件内容
+    li.active 编辑插件内容 
+  div[ng-controller="PluginconOperCtrl"]
+    textarea#editor[placeholder="这里输入内容" ] =@item.con
+    =render "layouts/simditor"
+    br 
+  
+    button#btnupdate.btn.btn-info<[type="button" ng-click="update(#{@item.id})"] 更新
+
+    button.btn.btn-danger<[ng-click="destroy(#{@item.id})"] 删除 
+
+    -if @item.recsts == "1"
+      div.input-group[style="margin: 10px 0"]
+        span.input-group-btn 
+          button.btn.btn-default 奖励金额
+        input.form-control[type="text" ng-model="award"]
+        span.input-group-btn
+          button.btn.btn-success[ng-click="merge(#{@item.id})"] 合并内容
+
+  input#menubar[type="hidden" value="plugincons"]
+
+  javascript:
+    var con_editor = initEditor($('#editor'));

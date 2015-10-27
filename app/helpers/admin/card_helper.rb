@@ -1,0 +1,2 @@
+module Admin::CardHelper
+end

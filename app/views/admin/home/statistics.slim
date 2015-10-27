@@ -1,0 +1,118 @@
+-content_for :menu
+  =render 'mem_bar'
+-content_for :con
+  ul.statistyp
+    li 
+      span 本月
+      br
+      span.btno[data-unit="day"] 查看
+
+    li.on
+      span 最近
+      input.txt[type="number" value="10"]
+      span 天
+      br
+      span.btno[data-unit="day"]  查看
+
+    li
+      span 最近
+      input.txt[type="number" value="10"]
+      span 个月 
+      br
+      span.btno[data-unit="month"] 查看
+
+  div#main[style="height:400px"]
+
+  input#menubar[type="hidden" value="statistics"]
+
+  script[src="/echarts/build/dist/echarts.js"]
+  javascript:
+    $(function(){
+        $('.btno').click(function(){
+           $('.statistyp li').removeClass('on');
+           $(this).closest('li').addClass('on'); 
+           var num = $(this).closest('li').find('.txt').val()
+           $.post('/admin/incomes',{unit:$(this).attr('data-unit'),num: num},function(data){
+                show_echarts(data)
+           })
+        }).first().click() 
+    }) 
+
+    function show_echarts(my_data){
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '/echarts/build/dist'
+            }
+        });   
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar', // 使用柱状图就加载bar模块，按需加载,
+                'echarts/chart/line' 
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main')); 
+                
+                var option = {
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['收入','充值人数']
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : _.map(my_data,function(m){return m.date})
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"收入",
+                            "type":"bar",
+                            "data": _.map(my_data,function(m){return m.money}),
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均值'},
+                                ]
+                            }
+                        },
+                        {
+                            "name":"充值人数",
+                            "type":"bar",
+                            "data": _.map(my_data,function(m){return m.num}),
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均值'} 
+                                ]
+                            }
+                        }
+                    ]
+                };
+        
+                // 为echarts对象加载数据 
+                myChart.setOption(option); 
+            }
+        );
+    }
+
+ 

@@ -1,0 +1,9 @@
+-content_for :con
+  div.title-bar
+    strong #{who @isme}的关注
+  div.mem-con[ng-controller="FollowCtrl" ng-init="following_list(1,12,#{@mem.id})"]
+    =render "layouts/follow_partial.slim"
+    div#page-follow
+
+
+

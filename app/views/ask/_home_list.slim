@@ -1,0 +1,33 @@
+-ask_list
+div.ask-list
+  ul
+    -@items.each do |item|
+      li            
+        a[href="/mem/#{item.mem_id}" target="_blank"]: img.tx[ng-src="#{access_path 'mem'}#{item.mem.photo}"]
+        h4: a[href="/ask/#{item.id}"] =item.title
+        div.extra
+          span 提问时间：#{item.friendly_time}
+          span.money[style="display: #{item.money > 0 ? 'inline-block' : 'none'}"] 悬赏：#{item.money}
+          ul
+            -item.keywords.split(',').each do |key|
+              li:  a<[href="#"] =key
+
+        div.info
+          div.in1[class="#{item.answer > 0 ? 'on' : ''}"]
+            span =item.answer
+            br
+            span< 回答
+          div
+            span =item.visit
+            br
+            span< 查看
+  div#page-asks 
+
+javascript:
+  $(function(){
+    $("#page-asks").pagination(#{@count},{
+      items_per_page : 15,
+      current_page : #{page},
+      link_to:"/asks/__id__",
+    }) 
+  })  

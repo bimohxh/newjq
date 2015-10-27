@@ -1,0 +1,56 @@
+-content_for :title 
+  | FontAwsome-jQuery插件库
+
+-content_for :description 
+  | FontAwsome文档
+
+-content_for :keywords 
+  | FontAwsome,字体图标,网页图标
+
+-content_for :banner
+  div.fabanner
+    div.container
+      div.row
+        div.col-md-9
+          a[href="/library/FontAwesome"]: h1 
+            i.fa.fa-flag.left
+            span Font Awesome
+         
+          div
+            a>[href="https://github.com/FortAwesome/Font-Awesome" target="_blank"]
+              i.fa.fa-github
+              span 
+            span 作者：
+            a[href="http://twitter.com/davegandy" target="_blank"] Dave Gandy
+
+          p 519个免费图标，通过CSS控制，不依赖javascript，大小可伸缩，Retina屏可完美显示，可兼容Bootstrap等所有前端库，支持屏幕阅读器。  
+
+          p 
+            span> 基本用法 
+            code &lt;i class="fa fa-flag"&gt;&lt;/i&gt;
+            a<[href="/library/FontAwesome_examples"] 更多好玩的用法
+        div.col-md-3  
+          a.down-btn[href="/library/FontAwsome/font-awesome-4.3.0.zip" style="margin-top: 25px;"]  
+            i.fa.fa-download
+            span<> Download 
+            small V4.3.0 
+
+          a.down-btn[href="/library/FontAwesome_examples" style="margin-top: 25px; background-color: #DBB5A1" ]  
+            i.fa.fa-book
+            span<> 详细用法
+            small 中文文档
+      
+  script[src="/library/FontAwsome/font-awsome.js"] 
+  
+  css:
+    body{
+      background-color: #FFF;
+    }
+    .alert-success {
+      background-color: #f1f9f7;
+      border-color: #e0f1e9;
+      color: #1d9d74;
+    }
+    .syntaxhighlighter{
+      width:auto;
+    }

@@ -1,0 +1,49 @@
+-content_for :banner
+  div.banner.tools
+    div.container
+      h2
+        i.fa.fa-briefcase>
+        span 2D/3D变换
+      i just design your app online
+
+-content_for :con
+  div.row[ng-controller="ToolTransformCtrl"]
+    div.col-md-6 
+
+      div.slider-wrap
+        span 平移 
+        input.form-control.number<>[type="text" ng-model="paras.leftTop"]
+        span px
+        div.slider
+
+      div.slider-wrap
+        span 旋转 
+        input.form-control.number<>[type="text" ng-model="paras.leftTop"]
+        span px
+        div.slider
+
+      div.slider-wrap
+        span 缩放 
+        input.form-control.number<>[type="text" ng-model="paras.leftTop"]
+        span px
+        div.slider
+
+      div.slider-wrap
+        span 翻转 
+        input.form-control.number<>[type="text" ng-model="paras.leftTop"]
+        span px
+        div.slider
+      
+  
+  script[src="http://libs.baidu.com/jqueryui/1.10.2/jquery-ui.min.js"]
+  link[href="/jquery-ui/jquery-ui.css" media="all" rel="stylesheet"]
+
+  javascript:
+    $(function(){
+      $('.slider').slider({
+        max: 200,
+        slide: function( event, ui ) { 
+          $(ui.handle).closest('.slider-wrap').find('.form-control.number').val(ui.value).change();
+        }
+      }); 
+    })

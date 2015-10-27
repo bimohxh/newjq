@@ -1,0 +1,42 @@
+-content_for :menu
+  =render 'pub_bar'
+-content_for :con
+  table.table#list[ng-controller="AskCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 标题
+        th 提问者
+        th 悬赏
+        th 访问量 
+        th 收藏
+        th 回答
+        th 是否采纳
+        th 提问时间 
+        th 操作 
+    tbody 
+      tr[ng-repeat="item in items"]
+        td {{item.id}}
+        td: a(href='/ask/{{item.id}}' target='_blank') {{item.title}} 
+        td: a(href='/mem/{{item.mem_id}}' target='_blank') {{item.mem.nc}} 
+        td {{item.money}}
+        td {{item.visit}} 
+        td {{item.collect}} 
+        td: a(href='/admin/answers?aid={{item.id}}' target='_blank') {{item.answer}} 
+        td {{item.status}}  
+        td {{item.created_at | date: "yyyy-MM-dd" }}  
+        td
+          a[href="/plugin/{{item.id}}/edit"]: i.fa.fa-edit>
+          a[href="#" data-id="{{item.id}}" ng-click="destroy(item.id)"]: i.fa.fa-trash<>
+          /a[href="#" data-id="{{item.id}}" ng-click="destroy(item.id)"]: i.fa.fa-trash<>
+          /a[href='#' ng-click="reset(item.id)" title='点击切换状态']: i.fa.fa-ban
+          /a[href='#' title='发送消息' ng-click="notify(item.mem_id)" data-toggle="modal" data-target="#myModal"]: i.fa.fa-bell<
+    tfoot
+      tr
+        td[colspan='12'] 
+          span 总记录：
+          span#totalc 加载中.. 
+  div#pagenation
+
+
+  input#menubar[type="hidden" value="asks"]

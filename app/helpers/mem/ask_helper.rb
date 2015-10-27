@@ -1,0 +1,2 @@
+module Mem::AskHelper
+end

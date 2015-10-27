@@ -1,0 +1,54 @@
+.video-item{
+  background-color: #FFF ; padding: 40px 20px; list-style: none; margin-bottom: 1px; overflow: hidden; position: relative;
+  .cover{width: 150px; height: 95px; float: left; padding-right: 10px;}
+  .fa-play-circle{
+    display: block; position: absolute; right: 20px; top: 60px; font-size: 50px; color: #FFF; 
+  }
+  & > h4{color: #333;font-size: 15px;font-weight: bold;}
+  .duration{position: absolute;right: 0;background-color: #D5E1E6;color: #6291A5;top: 0;padding: 2px 10px; font-size: 12px;}
+  &:hover{
+    .fa-play-circle{color: #14B8B8;}
+  }
+
+} 
+.video-bar{
+  background-color: #FFF; padding: 10px 20px; margin-bottom: 20px;
+  .tx{width: 60px; height: 60px; border-radius: 100%;}
+  .labels{
+    a{display: inline-block; background-color: #EEE;color: #309EC7;padding: 2px 5px;margin: 5px; text-decoration: none}
+  }
+  & > h4{
+    border-bottom: #EEE 1px solid; padding-bottom: 10px;
+  }
+}
+.video-detail{
+  .topper{
+    overflow: hidden;background-color: #000; color: #FFF; padding: 10px 20px;border-bottom: #7C1111 1px solid;
+    h4{display: inline-block; font-size: 16px;}
+    i{
+      display: inline-block; margin-left: 10px; margin-top: 10px; color: #EEE; float: right;
+      span{padding-left: 3px;}
+    }
+    .tx{width: 25px; height: 25px;margin-right: 5px; border-radius: 100%;}
+    .favor-btn{
+      cursor: pointer;
+      &.fa-heart{color: #F91E1E;}
+    }
+  }
+  .video-infos{
+    padding-right: 300px; background-color: #FFF; position: relative;
+    .wrap{
+      position: absolute; right: 0; top:0; width: 300px;
+      .inner{padding: 10px 20px;}
+    }
+    
+  }
+  
+  .con {
+    background-color: #FFF; padding:  20px; margin-top: 10px; display: block;color: #656e73;
+  }
+}
+
+.list-group{
+  .badge{background-color: #DDD}
+}

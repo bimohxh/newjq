@@ -1,0 +1,32 @@
+-content_for :menu
+  =render 'pub_bar'
+-content_for :con
+  table.table#list[ng-controller="AnswerCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 问题
+        th 回答者
+        th 投票
+        th 内容 
+        th 回答时间 
+        th 操作 
+    tbody 
+      tr[ng-repeat="item in items"]
+        td {{item.id}}
+        td: a(href='/ask/{{item.ask_id}}' target='_blank'): i.fa.fa-link
+        td: a(href='/mem/{{item.mem_id}}' target='_blank') {{item.mem.nc}} 
+        td {{item.votes}}
+        td {{item.con}} 
+        td {{item.created_at | date: "yyyy-MM-dd" }} 
+        td
+          a[href="#" data-id="{{item.id}}" ng-click="destroy(item.id)"]: i.fa.fa-trash<>
+    tfoot
+      tr
+        td[colspan='12'] 
+          span 总记录：
+          span#totalc 加载中.. 
+  div#pagenation
+
+
+  input#menubar[type="hidden" value="answers"]

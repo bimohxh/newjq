@@ -1,0 +1,114 @@
+-content_for :menu
+  =render 'mem_bar'
+-content_for :con
+  table.table#list[ng-controller="CardCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 卡号
+        th 价格
+        th 面值
+        th 生成时间
+        th 是否充值
+        th 本站会员 
+        th 淘宝订单号 
+        th 操作
+      tr
+        th
+        th: input.form-control[type='text' style='width:150px'  ng-blur="search('key')" ng-model="filter_key"] 
+        th
+        th
+        th
+        th
+        th: input.form-control[type='text' style='width:100px'  ng-blur="search('mem_id')" ng-model="filter_mem_id" placeholder="会员ID"] 
+        th: input.form-control[type='text' style='width:150px'  ng-blur="search('taobaouid')" ng-model="filter_taobaouid"] 
+        th  
+    tbody 
+      tr[ng-repeat="item in items"]
+        td {{item.id}}
+        td {{item.key}} 
+        td {{item.cost}} 
+        td {{item.val}} 
+        td {{item.created_at}} 
+        td[class="{{item.used}}"] {{item.used == 'USED' ? '已充值' : '未使用' }}
+        td: a(href='/mem/{{item.mem_id}}' target='_blank') {{item.mem.nc}}
+        td {{item.taobaouid}}
+
+        
+        td.operate 
+          //a(href='#' ng-click="remove(item.id)" title='删除'): i.glyphicon.glyphicon-trash
+          //a<(href='#' ng-click="reset(item.id)" title='点击切换是否已售出'): i.glyphicon(class="glyphicon-eye-{{item.recsts == '0' ? 'open' : 'close'}}")
+    tfoot
+      tr
+        td[colspan='14'] 
+          span 总记录：
+          span#totalc 加载中..
+
+
+  div#pagenation
+
+
+  h3 生成充值卡
+  div.btn-group
+    button.btn.btn-default[type="button"  onclick="set_card(10,50)"] 10元
+    button.btn.btn-default[type="button"  onclick="set_card(30,170)"] 30元
+    button.btn.btn-default[type="button"  onclick="set_card(50,300)"] 50元
+  br
+  br
+
+  
+  =form_for(Card.new,url: '/admin/card/save',html:{id: 'inform'}) do |item|
+    ul.card-list
+      li
+        span 价格：
+        =item.text_field :cost,{class: 'form-control'}
+    
+      li
+        span 面值：
+        =item.text_field :val,{class: 'form-control'}
+
+      li
+        span 数量：
+        input.form-control[name='num' value="1"]
+      li
+        span 淘宝订单号 ：
+        =item.text_field :taobaouid,{class: 'form-control'}
+      
+      li
+        button.btn.btn-default[type="submit"] 添 加
+    div.clear
+    small 提示： 10元 = 50 jQ币  30元 = 170 jQ币  50元 = 300 jQ币
+
+
+
+  input#menubar[type="hidden" value="cards"]
+  javascript:
+    $(function(){ 
+      $("#inform").validate({
+        rules:{
+          'card[cost]':{
+            required:true,
+            number:true 
+          },
+          'card[val]':{
+            required:true,
+            number:true 
+          },
+          'card[num]':{
+            required:true,
+            number:true
+          }
+        },
+        messages:{
+          'card[cost]':'',
+          'card[val]':'',
+          'card[num]':''
+        },
+      });  
+      set_card(10,50);
+    })
+
+    function set_card(num,val){
+      $("#card_cost").val(num);
+      $("#card_val").val(val)
+    }

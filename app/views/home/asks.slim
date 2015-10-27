@@ -1,0 +1,48 @@
+-content_for :con
+  div.row
+    div.col-md-9.ask-list-wrap
+      div.ask-banner
+        div.left
+          span.big-2 A
+          span.big-1 A
+        div.left.w-wrap  
+          p.word-1 问答 
+          p.word-2 Ask and Answer
+        div.clear
+      div.ask-menu
+        ul
+          li.on[data-val="created_at"]
+            a[href="/asks?order=created_at"]
+              span 最新
+              i.fa.fa-sort-asc
+          li[data-val="money"]
+            a[href="/asks?order=money"]
+              span 最高悬赏
+              i.fa.fa-sort-asc
+          li[data-val="answer"]
+            a[href="/asks?order=answer"]
+              span 无人问津
+              i.fa.fa-sort-asc 
+      /-cache "ask_list_#{Ask.count}_#{page}_#{params[:order]}",:expires_in => 1.hour do
+      =render "ask/home_list"
+    
+    div.col-md-3.visible-lg-block.visible-md-block.ask-right-bar
+      div.inner
+        a.btn.btn-success.ask-btn.open-login[href="/ask/new"]
+          i.fa.fa-pencil>
+          span 我要提问
+
+        div.panel.panel-default
+          div.panel-heading 统计信息
+          div.panel-body
+            -cache "ask_summary",:expires_in => 1.day do
+              p 
+                span 问题：#{Ask.count} / 
+                span.green #{Ask.where({:status=>'SOLVED'}).count}
+              p 
+                span 回答：#{Answer.count} 
+
+  javascript:
+    $(function(){
+      $(".ask-menu li[data-val=#{params[:order]}]").addClass("on").siblings().removeClass("on");
+    })            

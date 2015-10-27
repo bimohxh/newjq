@@ -1,0 +1,42 @@
+-content_for :menu
+  =render 'site_bar'
+-content_for :con
+  table.table#list[ng-controller="CommentCtrl" ng-init="get_list(1)"]
+    thead
+      tr
+        th #
+        th 评论者
+        th 类型
+        th 对象 
+        th 内容 
+        th[style="width: 100px;"] 时间 
+        th 操作
+      tr
+        th
+        th: input.form-control[type='text' style='width:100px'  ng-blur="search('mem_id')" ng-model="filter_mem_id" placeholder="会员ID"]
+        th: input.form-control[type='text' style='width:100px'  ng-blur="search('typ')" ng-model="filter_typ"]
+        th: input.form-control[type='text' style='width:100px'  ng-blur="search('idcd')" ng-model="filter_idcd" placeholder="对象ID"]
+        th
+        th
+        th
+        th    
+    tbody 
+      tr[ng-repeat="item in items"]
+        td {{item.id}}
+        td: a(href='/mem/{{item.mem_id}}' target='_blank') {{item.mem.nc}} 
+        td {{item.typ}}
+        td: a(href='/{{item.typ}}/{{item.idcd}}' target='_blank') 查看  
+        td {{item.con}} 
+        td {{item.friendly_time}}  
+        td.operate
+          a[href='#' ng-click="destroy(item.id)" title='删除']: i.fa.fa-trash
+    tfoot
+      tr
+        td[colspan='14'] 
+          span 总记录：
+          span#totalc 加载中..
+
+
+  div#pagenation
+
+  input#menubar[type="hidden" value="comments"]

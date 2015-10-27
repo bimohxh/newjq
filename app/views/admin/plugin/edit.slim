@@ -1,0 +1,31 @@
+-content_for :menu
+  =render 'pub_bar'
+-content_for :con
+  ol.breadcrumb
+    li: a[href="/admin"] 首页
+    li: a[href="/admin/plugins"] 发布
+    li: a[href="/admin/plugins"] 插件
+    li.active 编辑：#{@item.title}
+  =render 'layouts/plugin'
+  
+  -if is_admin?
+    div.panel.panel-default[ng-controller="PluginOperCtrl" ng-init="init('#{@item.recsts}')"]
+      div.panel-heading 审核操作
+      div.panel-body
+        div.input-group[style="margin-bottom: 20px;"]
+          input.form-control[type="text"  placeholder="删除原因，可空" ng-model="reason"]
+          span.input-group-btn
+            button.btn.btn-danger[ng-click="destroy(#{@item.id})"] 删除
+
+        
+        div.input-group[ng-show="recsts == '1'"]
+          span.input-group-btn 
+            button.btn.btn-default 奖励金额
+          input.form-control[type="text"   ng-model="award"]
+          span.input-group-btn
+            button.btn.btn-success[ng-click="check(#{@item.id})"] 审核通过
+         
+        button.btn.btn-danger[ng-click="reset(#{@item.id})" ng-show="recsts == '0'"] 设为不可见
+            
+
+  input#menubar[type="hidden" value="plugins"]

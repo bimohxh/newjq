@@ -1,0 +1,18 @@
+-content_for :con
+  div.mem-sub-menus
+    ul
+      li
+        a[href="/mem/code/#{@mem.id}/favors"] #{who @isme}收藏的
+      li.on
+        a[href=""] #{who @isme}发布的
+
+  div.mem-con[ng-controller="PubedCtrl" ng-init="init('code',#{@mem.id})"]
+    div.row 
+      div.col-md-4.col-sm-6[ng-repeat="item in items"]
+        div.faver-item
+          div.thumbile </>
+          div.cover {{item.title}}
+          div.title: a[href="/code/{{item.id}}" target="_blank"] {{item.title}}
+            
+    div#pag-favors      
+  input#mem-on[type="hidden" value="codes"]

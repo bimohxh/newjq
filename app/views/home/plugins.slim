@@ -1,0 +1,38 @@
+=content_for :banner
+  div.plugin-banner
+  =render "plugin/typs"
+  
+-content_for :con
+  div.row
+    div.col-md-10.plugin-split
+      =cache "plugins_#{Plugin.where({:recsts=>0}).count}_#{page}_#{params[:filter]}_#{params[:typ]}_#{params[:rtyp]}",:expires_in => 1.day do
+        =render "plugin/home_list"            
+    div.col-md-2.hidden-xs.pin-bar
+      div.search-wrap
+        form#baidu_search[action="http://zhannei.baidu.com/cse/search" target="_blank"]
+          input.form-control.search-txt[type="text" name="q"  autocomplete="off" placeholder="搜索插件.."]
+          button.search-btn[type="submit" title="搜索"]: i.fa.fa-search 
+          input[type="hidden" name="s" value="281803324539983439"]
+          input[type="hidden" name="entry" value="1"]          
+      
+      strong.bar-title 插件筛选 
+      div.list-group.plugin-filter[data-para="#{params[:filter] || 'time'}"]
+        /a.list-group-item[href="/plugins?filter=time#{typ_url params}" data-para="time"] 最新发布
+        a.list-group-item[href="/plugins?filter=comments#{typ_url params}" data-para="comments"] 最多评论
+        a.list-group-item[href="/plugins?filter=favors#{typ_url params}" data-para="favors"] 最多收藏
+        a.list-group-item[href="/plugins?filter=downloads#{typ_url params}" data-para="downloads"] 最多下载
+        a.list-group-item[href="/plugins?filter=ie8#{typ_url params}" data-para="ie8"] 兼容IE8
+        a.list-group-item[href="/plugins?filter=ie6#{typ_url params}" data-para="ie6"] 兼容IE6
+   
+  css:
+    .list-typs{top: -20px;}      
+  javascript:
+    $(function(){
+      $(".plugin-filter > a[data-para="+$(".plugin-filter").attr("data-para")+"]").addClass("on");
+
+ 
+
+      $('.pin-bar').pin();
+    })
+
+    

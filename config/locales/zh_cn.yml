@@ -1,0 +1,37 @@
+zh-CN:
+  mem_none: "该用户不存在！"
+  mem_novalid: "该用户已被封号，如有疑问，请联系客服！"
+  no_login: "请登录后继续！"
+  year: "年"
+  month: "月"
+  day: "天"
+  hour: "小时"
+  min: "分钟"
+  sec: "秒"
+  justnow: '刚刚'
+  ago: '前'
+  pubedok: '感谢您的提交，我们将尽快为您审核！'
+  pubedfail: '对不起，提交失败，请返回发布页面重试！'
+  askok: '你的问题提交成功，有回答我们将以邮箱的形式告知您。'
+  askfail: '对不起，你的问题提交失败，请返回重试'
+  filetyperror: '文件类型错误'
+  filesizeerror: '文件大小超过限制'
+  allowdown0: '你是作者'
+  allowdown1: '你是管理员'
+  allowdown2: '你今日已购买'
+  rejectdown1: 'JQ币不足'
+  feedback: '感谢你的反馈，我们将尽快为您处理！'
+  singup_fail: '注册失败，请稍后重试！'
+  login_fail: '登陆失败，用户名或密码错误！'
+  setpwd_error_1: '设置密码失败，无效的key！'
+  setpwd_error_2: '设置密码失败，该用户不存在！'
+  setpwd_success: '新密码设置成功，请牢记你的密码！'
+  send_pwd: '邮件已经发送到你的邮箱，请查收！'
+  no_valide_pwd_link: '该找回密码链接无效'
+  plugin_nocheck: '该插件尚未通过审核！'
+  vote1: "不能给自己投票"
+  vote2: "不能重复投票" 
+  asknomoney: "提问失败，你所设置的悬赏金额大于了自己的jQ币余额"
+  rewardnomoney: "追加悬赏失败，你所设置的悬赏金额大于了自己的jQ币余额"
+  no_admin_login: "你不是管理员，没有权限进行此操作"
+

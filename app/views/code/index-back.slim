@@ -1,0 +1,139 @@
+=content_for :header
+  script[src="/code-online/CodeMirror/codemirror.js"] 
+  script[src="/code-online/CodeMirror/mode/xml/xml.js"]
+  script[src="/code-online/CodeMirror/mode/javascript/javascript.js"]
+  script[src="/code-online/CodeMirror/mode/css/css.js"] 
+  link[href="/code-online/CodeMirror/codemirror.css" media="all" rel="stylesheet"]
+  script[src="/code-online/online.js"]
+  css:
+    .con-wrap{margin: 0;padding: 0;width: 100%;}
+    footer{display: none!important}
+    header{margin-top: -60px}
+=content_for :con
+  div#online-body[ng-controller="OnlineCtrl" ng-init="init(#{params[:id]})"] 
+    div.onlie-menu
+      div.btn-group.right
+
+        button.btn.btn-default[type="button" onclick="onlie_run()"]
+          i.fa.fa-play>
+          span 运行
+        button.btn.btn-default[type="button" ng-show="ismy || isnew" ng-click="save()"]
+          i.fa.fa-save>
+          span {{issaved ? '已保存' : '保存*'}}
+        button.btn.btn-default.open-login[type="button" ng-show="ismy" ng-click="destroy()"]
+          i.fa.fa-trash>
+          span 删除
+        button.btn.btn-default[type="button"]
+          i.fa.fa-share>
+          span 分享
+        button.btn.btn-default[type="button" ng-hide="ismy || isnew"   ng-click="fork()" ]
+          i.fa.fa-code-fork>
+          span Fork
+
+        -if @is_login  
+          button.btn.btn-default[type="button"]
+            a[href="/mem"] =current_mem.nc
+        -else
+          button.btn.btn-default.open-login[type="button"]
+            i.fa.fa-user>
+            span 登陆  
+
+      div.btn-group.packages.right
+        -packages.each do |item|
+          div.btn-group
+            button[type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"]
+              span> =item.keys[0].to_s
+              span.caret
+            ul.dropdown-menu[role="menu"]
+              -item.values[0].each do |menu|
+                -data_src = menu.values[0].map{|m| "#{item.keys[0].to_s}/#{menu.keys[0].to_s}/#{m}"}.join(',')
+                li: a[data-src="#{data_src}"] =menu.keys[0].to_s
+ 
+      
+      div.code-title
+        div.inner.home-inner 
+          a[href="/"]: i.fa.fa-home
+        div.inner
+          a[href="/mem/{{item.mem_id}}"]: img.tx[ng-src="#{access_path 'mem'}{{item.mem.photo}}" ng-hide="isnew"]
+          h4 {{item.title}}
+          span[ng-hide="isnew"]
+            i.fa.fa-heart[ng-click="collect(item)" ng-class="isfavor ? 'on' : ''"]  {{item.collect}}
+            i.fa.fa-comment<>[data-toggle="modal" data-target="#CommentModal"]  {{item.comment}}
+
+      div.clear
+    
+    /- 新建保存
+    div#codeModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" backdrop="false" keyboard="false"] 
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button[type="button" class="close" data-dismiss="modal" aria-label="Close"]: span[aria-hidden="true"] &times;
+            h4#myModalLabel.modal-title 保存代码
+          div.modal-body
+            span 请输入代码标题：
+            input.form-control[type="text" ng-model="title"]
+
+          div.modal-footer
+            button.btn.btn-success[ng-click="save_sub()"] 保存
+    
+    /- fork
+    div#forkModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" backdrop="false" keyboard="false"] 
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button[type="button" class="close" data-dismiss="modal" aria-label="Close"]: span[aria-hidden="true"] &times;
+            h4#myModalLabel.modal-title Fork代码
+          div.modal-body
+            span 请输入代码标题：
+            input.form-control[type="text" ng-model="forktitle"]
+
+          div.modal-footer
+            small.left Fork代码后将会复制一份该代码最后的保存状态到自己的代码库中
+            button.btn.btn-success[ng-click="fork_sub()"] Fork
+     
+
+    div[style="padding: 10px;"]      
+      div.onlie-wrap[style="height: 600px;"]
+        div.onlie-horizontal.onlie-top
+          div.onlie-vertical.onlie-left.unselect
+            div.onlie-inner
+              span.online-label HTML
+              textarea#html-text
+              i.fa.fa-expand
+
+          div.split-vertical
+
+          div.onlie-vertical.onlie-right.unselect
+            div.onlie-inner
+              span.online-label CSS
+              textarea#css-text
+              i.fa.fa-expand
+
+          div.split-vertical
+
+          div.onlie-vertical.onlie-center.unselect
+            div.onlie-inner
+              span.online-label JavaScript
+              textarea#js-text
+              i.fa.fa-expand
+
+          
+
+        div.split-horizontal
+
+        div.onlie-horizontal.onlie-bottom.unselect
+          div.onlie-inner
+            iframe#preview-window
+            div.widnow-cover
+            span.online-label
+              span> Result
+              i.fa.fa-expand
+  
+
+  /- 评论
+  -if @item 
+    div#CommentModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" backdrop="false" keyboard="false"] 
+      div.modal-dialog.modal-lg
+        div.modal-content
+          div.modal-body
+            =render "layouts/comment" 

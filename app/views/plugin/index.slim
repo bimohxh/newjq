@@ -1,0 +1,346 @@
+-content_for :title 
+  | #{@item.title}-jQuery插件库
+
+-content_for :description 
+  | #{@item.desc}
+
+-content_for :keywords 
+  | #{@item.keywords}
+
+=content_for :banner
+  =render  "plugin/typs"
+  div[style="position:relative"]
+    div.list-typs: ul        
+-content_for :con
+  div.row.plugin-wraps[ng-controller="PluginCtrl" ng-init="init(#{@item.id})"]
+    
+    div.col-md-9.plugin-detail
+      div.top-bann
+        h4 =@item.title
+        p
+          -@item.typ.split(',').each do |t|
+            small: a>[href="/plugins?typ=#{URI.encode t}"] =t
+        ul
+          li
+            i.fa.fa-eye>[style="padding: 0"]
+            span =@item.visit
+          li
+            i.fa.fa-heart>
+            span =@item.collect    
+          li
+            i.fa.fa-comment>
+            span[style="border: 0"] =@item.comment    
+        
+        // ad
+        /a.ad[href="http://www.hubwiz.com/" target="_blank"]: img[src="/assets/ady.png"]  
+      //- 填加内容
+      div#add-wraper.add-con
+      script#add-editor[type="text/html"]
+        div.inner
+          div.declare 本着分享经验的精神，如果你觉得该插件的使用方法不正确或有待改进，可以在下面添加上你的使用方法（注意：使用中的问题、改进建议和使用感想请写在评论里，写在此处将不予通过），一经采用，我们会相应地给予1-10jQ币不等的奖励，请确保你的方法是经过验证通过的,且不要只贴代码而没有文字说明，否则不予通过。
+          =form_tag "/plugin/con",method: 'post',id: 'con_form'
+            textarea#editor[placeholder="这里输入内容，长度不能小于10" data-for="#plugin_con"] 
+            input[type="hidden" name="con" id="plugin_con"]
+            input[type="hidden" name="id" id="plugin_id" value="#{@item.id}"]
+              
+            button.btn.btn-success[type="submit"] 确认提交 
+            input.btn.btn-default<[type="button" onclick="cancel_add()" value="取消"] 
+          
+
+      div.con
+        img.thumbile[src="#{access_path 'plugin'}#{@item.pic}"]  
+
+        //- 浏览器支持
+        div.browsers
+          ul#browsers-ul[data-val="#{@item.browser}"]
+            -(6..11).each do |i|
+              li[data-val="#{i}"]
+                span =i
+                i
+
+        div.sdesc        
+          h4 简介
+          p  =raw @item.desc       
+        article =raw @item.con
+
+        //- 版权
+        div.banquan
+          p 版权声明
+          ul
+            li 版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）
+            li 发表日期：#{@item.created_at}
+            li 
+              span 文章链接： 
+              a[href='#{request.original_url }'] =request.original_url 
+              span< 转载请务必加上该链接
+        
+        //- ad
+        div[style="padding-bottom: 15px"]: ins.adsbygoogle[style="display:block"     data-ad-client="ca-pub-9906622596531689"     data-ad-slot="1266871969"     data-ad-format="auto"]
+
+        //- 上一个 下一个
+        div.prev-next
+          div.big 
+            span.left PREVIOUS
+            span.right NEXT
+            div.clear
+          div.nav-list  
+            -if @item.prev 
+              a[href="/plugin/#{@item.prev.id}"]
+                i.fa.fa-angle-left.left
+                span =@item.prev.title 
+
+            -else
+              i.fa.fa-angle-left.left
+              span 到头了^_^
+
+            div.right  
+              -if @item.next
+                a.right[href="/plugin/#{@item.next.id}"]
+                  span =@item.next.title
+                  i.fa.fa-angle-right.right  
+                  
+              -else
+                span.right 到头了^_^
+                i.fa.fa-angle-right.right 
+        
+        //相关插件
+        -cache "plugin_#{@item.id}_related"   
+          div.rela-items
+            h4 相关插件
+            div.inner
+              div.row
+                -related_plugins(@item).each do |item| 
+                  div.col-md-4
+                    a[href="/plugin/#{item.id}"]: img.cover[src="#{access_path 'plugin'}#{item.pic}" alt="#{item.title}"]
+                    /h5 =item.title
+              a.more[href="/?typ=#{@item.typ}"]
+                i.fa.fa-th>
+                span #{@item.typ} 所有项目
+            div.clear      
+
+
+        //- 评论
+        /-cache "comment_plugin_#{@item.id}"
+        =render "layouts/comment"      
+      
+      
+
+
+    div.col-md-3.plugin-info
+      div.inner
+        div.author-info
+          a[href="/mem/#{@item.mem.id}"]: img.tx[src="#{access_path 'mem'}#{@item.mem.photo}"]
+          a[href="/mem/#{@item.mem.id}"]: strong.nc =@item.mem.nc
+          br
+          i.fa.fa-map-marker>
+          span =@item.mem.mem_info.city_alia
+
+        div.oper-wrap 
+          button.btn.btn-primary[ng-click="follow(#{@item.mem.id})" class="{{isfollow}}"]
+            i.fa>[ng-class="isfollow ? 'fa-check' : 'fa-plus'"]
+            span {{isfollow ? '已关注' : '关注作者'}} 
+            span< #{@item.mem.followers}
+
+          button.btn.btn-default[ng-click="collect(#{@item.id})" class="{{isfavor}}"]
+            i.fa>[ng-class="isfavor ? 'fa-heart' : 'fa-heart-o'"]
+            span {{isfavor ? '已收藏' : '收藏插件'}}
+            span< #{@item.collect}
+      div.plugin-opers
+        a.a1[href="/plugin/#{@item.id}/demo" target="_blank" ]
+          i.fa.fa-eye>
+          span 查看演示  
+
+        -if @item.website[0]
+          a.a2[href="/plugin/#{@item.id}/website" target="_blank"]
+            i.fa.fa-globe>
+            span website  
+
+        a.a3#download-btn[href="" ng-click="download(#{@item.id})"]
+          i.fa.fa-download> 
+          span 立即下载
+
+        a.a4#add-conbtn.open-login[href=""]
+          i.fa.fa-edit> 
+          span 填加用法  
+
+        a.a5[href="#" data-toggle="modal" data-target="#bugModal"]
+          i.fa.fa-bug> 
+          span 错误提交
+      
+      div.inner
+        a.btn.btn-success.sub-plugin.open-login[href="/plugin/new"]
+          i.fa.fa-pencil>
+          span 发布插件
+
+      div.inner
+        a[href="/code/new"]: img[src="/assets/code-ad.png"]       
+      //- 百度广告  
+      /div.baidu-wraper  
+      /  javascript:
+      /    /*250*250*/
+      /    var cpro_id = "u2107020";
+      /  script[src="http://cpro.baidustatic.com/cpro/ui/c.js"]   
+      /div.baidu-wraper
+      /  ins.adsbygoogle[style="display:inline-block;width:250px;height:250px" data-ad-client="ca-pub-9906622596531689"  data-ad-slot="3537967961"]  
+
+    //- 弹出 下载框
+    div#downloadModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"] 
+      div.modal-dialog.modal-download
+        div.modal-content
+          div.modal-header
+            button.close[type="button" data-dismiss="modal"]
+              span[aria-hidden="true"] &times;
+              span.sr-only Close
+            h4#myModalLabel.modal-title =@item.title
+          div.modal-body
+            h4 
+              span 我当前jQ币余额：
+              span.num {{integral}}
+              span 已下载次数：
+              span.num =@item.downnum
+            small 注：购买该插件的用户当日可免费下载 插件作者可永久免费下载
+            ul
+              li.li-1: h4 
+                span 所需jQ币：
+                span.num =@item.cost
+                a[href="#"]: i.fa.fa-question-circle
+              li.li-2: a#downnow[href="{{downright.nomoney ? '#' : '/plugin/#{@item.id}/download'}}"]: h4 
+                i.fa.fa-download>
+                span 立即下载
+            div.clear
+            small 下载提示：由于文件较小，请直接点击下载，不支持迅雷等下载工具。 
+            
+            div.alert.alert-success[ng-show="downright.status"]
+              span 由于
+              strong<> {{downright.msg}} 
+              span 你可以直接下载，不消耗jQ币 
+
+            div.alert.alert-danger[ng-show="downright.nomoney"]
+              span 你的jQ币不足，你可以通过
+              a<>[href="/mem/pplugin" target="_blank"] 上传资源
+              span 或 添加插件用法 或
+              a<>[href="/mem/recharge"] 在线充值
+              span 获取jQ币
+    
+    //- 弹出 BUG
+    div#bugModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"] 
+      div.modal-dialog.model-bug
+        div.modal-content
+          div.modal-header
+            button.close[type="button" data-dismiss="modal"]
+              span[aria-hidden="true"] &times;
+              span.sr-only Close
+            h4#myModalLabel.modal-title Bug提交
+          div.modal-body
+            div.list-group
+              a.list-group-item[href=""] 
+                span 演示地址错误
+                i.fa.fa-check
+              a.list-group-item[href=""]
+                span 下载地址错误
+                i.fa.fa-check
+              a.list-group-item[href=""]
+                span 内容错误
+                i.fa.fa-check
+            textarea.form-control.area#bugsdesc[placeholder="错误详细说明"]
+          div.modal-footer
+            button.btn.btn-default[data-dismiss="modal"] 取 消 
+            button.btn.btn-success#bug-btn 提 交             
+
+  =render "layouts/simditor"          
+  javascript:
+    SyntaxHighlighter.defaults['auto-links'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;
+    SyntaxHighlighter.all();
+
+    $(function(){
+      $(".plugin-info").height($(".plugin-detail").height()-1);
+
+      //- 浏览器支持 
+      var br_index = $("#browsers-ul li[data-val="+$("#browsers-ul").attr('data-val')+"]").index()-1;
+      if(br_index >= 0 ){
+        $("#browsers-ul li:gt("+br_index+")").addClass('on');
+      }else{
+        $("#browsers-ul li").addClass('on');
+      }
+     
+
+      //- 添加用法
+      $('#add-conbtn').click(function(){
+        if (!Rails.islogin) {return false;}
+        if($('#add-wraper').html() == ''){
+          $('#add-wraper').html($('#add-editor').html()).slideDown();
+          var editor = initEditor($('#editor'));
+          
+          $('#con_form').validate({ 
+            rules:{
+              'con':{required:true,minlength: 17}, 
+            },
+            messages:{
+              'con':''
+            },
+            ignore: ".ignore",
+            submitHandler: function(form) {
+              $(form).ajaxSubmit({
+                success:function(data){
+                  if(data.status){
+                    show_tip($("#plugin_id"),'success','你的内容提交成功，我们会尽快为您审核！');
+                    editor.setValue('');  
+                  }else{
+                    show_tip($("#plugin_id"),'danger','对不起，你的内容提交失败，请稍后重试！');
+                  } 
+                },
+                error:function(){
+                  show_tip($("#plugin_id"),'danger','对不起，你的内容提交失败，请稍后重试！');
+                }
+              });
+            } 
+          });
+
+        }else{
+          $('#add-wraper').slideToggle();
+        }
+        
+        return false;
+      }) 
+
+      $('#downnow').click(function(){
+        $('#downloadModal').modal('hide');
+      });
+
+      //- bug
+      $('#bugModal .list-group-item').click(function(){
+        $(this).toggleClass('on');
+      })
+
+      $('#bug-btn').click(function(){ 
+        var sdesc = '';
+        _.each($('#bugModal .list-group-item'),function(m){
+          sdesc += $(m).find('span').text() + " | ";
+        })  
+        if(sdesc == ''){return false;}
+        $.post('/plugin/bug',{pid:#{@item.id},sdesc: sdesc,fdesc: $('#bugsdesc').val()},function(data){
+          //$('.bug').html("<h2>感谢您的支持!我们会马上解决错误问题！</h2>").add('.overlay').delay(1000).fadeOut() 
+          if(data.status){
+            show_tip($("#bugsdesc"),'success','你的Bug提交成功，我们会尽快解决错误问题！');
+          }else{
+            show_tip($("#bugsdesc"),'danger','对不起，你的Bug提交失败，请稍后重试！');
+          }
+        })
+      }) 
+
+      $(".plugin-info .plugin-opers").pin();
+
+
+    })  
+
+    function cancel_add(){
+      $('#add-wraper').slideUp();
+    }   
+
+    $(window).load(function(){
+      //-google广告
+      $("body").append("<script async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'><//script>");
+
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    })

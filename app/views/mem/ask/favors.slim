@@ -1,0 +1,27 @@
+-content_for :con
+  div.mem-sub-menus
+    ul
+      li
+        a[href="/mem/ask/#{@mem.id}/pubed"] #{who @isme}的提问
+      li
+        a[href="/mem/ask/#{@mem.id}/answers"] #{who @isme}的回答
+      li.on
+        a[href=""] #{who @isme}的收藏
+
+  div.mem-con[ng-controller="FavorCtrl" ng-init="init('ask',#{@mem.id})"]
+    ul.list-group.mem-ask-lists
+      li.list-group-item[ng-repeat="item in items"]
+        a[href="/ask/{{item.id}}"] 
+          span {{item.title}}
+        span.ask-state[ng-class="item.status"] {{item.status == 'SOLVED' ? '已解决' : '未解决'}}
+        span.info.right 
+          span {{item.answer}} 回答
+          i<> •
+          span {{item.collect}} 收藏
+          i<> •
+          span {{item.visit}} 查看
+          i<> •
+          span 2012-12-12 
+
+    div#pag-favors
+  input#mem-on[type="hidden" value="asks"]

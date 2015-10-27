@@ -1,0 +1,24 @@
+-content_for :con
+  div.mem-sub-menus
+    ul
+      li.on
+        a[href=""] #{who @isme}收藏的
+      li
+        a[href="/mem/plugin/#{@mem.id}/pubed"] #{who @isme}发布的
+      li.right: a[href="/plugin/new"] 发布插件  
+
+  div.mem-con[ng-controller="FavorCtrl" ng-init="init('plugin',#{@mem.id})"]
+    div.col-md-4.plugin-item-wrap[ng-repeat="item in items"]
+      div.plugin-item
+        div.wrap: a[href="/plugin/{{item.id}}"]: img[src="#{access_path 'plugin'}{{item.pic}}"]
+        article
+          a[href="/plugin/{{item.id}}"]: h4 {{item.title}}
+          small {{item.desc}}
+        div.foot
+          -if @isme
+            i.fa.fa-trash[title="删除" ng-click="destroy('plugin',item)"]
+          a[href="/mem/{{item.mem.id}}"]: img.tx[src="#{access_path 'mem'}{{item.mem.photo}}"]
+          
+    div.clear
+    div#pag-favors
+  input#mem-on[type="hidden" value="plugins"]

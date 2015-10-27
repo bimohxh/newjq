@@ -1,0 +1,32 @@
+-content_for :banner
+  div.banner.findpwd
+    div.container
+      h2
+        i.fa.fa-envelope>
+        span 找回密码
+      i find password
+
+=content_for :con
+  =form_tag "/mem/setpwd",id: 'item_form'
+    div.panel.panel-default.pwd-form
+      div.panel-heading 设置新密码
+      div.panel-body
+        div.input-group
+          input.form-control[type="text" placeholder="请输入你的新密码" name="newpwd"]
+          input[type="hidden" value="#{@item.key}" name="key"]
+          span.input-group-btn 
+            button.btn.btn-default[type="submit"] 
+              span 设置密码
+      div.panel-footer        
+        small.tishi 你当前正在为你的邮箱账号：#{@item.email} 设置新的密码      
+  javascript:
+    $(function(){
+      $('#item_form').validate({ 
+        rules:{
+          'newpwd':{required:true,minlength: 6}, 
+        },
+        messages:{
+          'newpwd':'', 
+        }, 
+      });
+    })            

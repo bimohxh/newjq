@@ -1,0 +1,132 @@
+-content_for :con
+  / div.title-bar
+  /   strong 个人设置
+  div.mem-con
+    =form_for(current_mem,url: "/mem/update",html: {id: 'memform',method: 'post'}) do |item|
+      table.form-table
+        tr
+          td[style="width: 40px;"]
+            =item.label :nc,'昵 称：'
+          td
+            =item.text_field :nc,{class: 'form-control'} 
+
+        tr
+          td
+            =item.label :email,'邮 箱：'
+          td
+            =item.text_field :email,{class: 'form-control'}
+
+        -if @mem.pwd.blank?
+          tr
+            td
+              =item.label :pwd,'密 码：'
+            td
+              input[type="password" class="form-control" name="pwd"] 
+
+        =fields_for current_mem.mem_info do |info|    
+          tr
+            td
+              =info.label :gender,'性 别：'
+            td
+              div.btn-group[data-toggle="buttons"] 
+                label.btn.btn-default
+                  =info.radio_button :gender, 'M' ,{autocomplete: "off"}
+                  span 程序猿
+                label.btn.btn-default
+                  =info.radio_button :gender, 'F' ,{autocomplete: "off"}
+                  span 程序媛
+          /tr
+          /  td
+          /    =info.label :dob,'生 日：'  
+          /  td
+          /    =info.text_field(:dob,class:'form-control form_datetime',readonly: true)    
+
+          tr
+            td
+              =info.label :city,'城 市：'  
+            td
+              =info.text_field :city,class:'form-control'
+
+
+ 
+        tr
+          td[collspan="2"]: button.btn.btn-primary[type='submit'] 更  新
+      
+      div.photo-wrap
+        img.tx#tx-preview[src="#{access_path 'mem'}#{current_mem.photo}"]
+        input#upload_pic[type="file" name="filedata" data-post="/upload/pic" data-text="更新头像" data-for="#mem_photo" data-folder="mem" data-width="100" data-height="100"]   
+        =item.hidden_field :photo
+    div.alert.alert-danger 为了您更好地使用本站的功能，请完善你的账户信息，邮箱和昵称不能为空，以后可用邮箱直接登陆。
+  input#mem-on[type="hidden" value="info"]
+  input#noshow[type="hidden" value="noshow"]
+
+  
+  javascript:
+    $(function(){
+
+      $(".form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd',
+        startView: 4,
+        minView: 2,
+        autoclose: true,
+        language: "zh-CN",
+        initialDate: '1989-1-1'
+      });
+
+      $('#memform').validate({ 
+        rules:{
+          'mem[email]':{
+            required: true,
+            email: true,
+            remote: {
+              url: "/mem/ckemail",
+              type: "post",
+            }
+          },
+          'pwd':{required:true,minlength: 6},
+          'mem[nc]':{
+            required:true,
+            remote: {
+              url: "/mem/cknc",
+              type: "post",
+            }
+          },
+          
+        },
+        messages:{
+          'mem[email]':{
+            required: '',
+            email: '',
+            remote: '该邮箱已被注册'
+          }, 
+          'pwd':'',
+          'mem[nc]':{
+            required: '',
+            remote: '该昵称已被占用'
+          },
+        }, 
+        submitHandler: function(form) {
+          $(form).ajaxSubmit({
+            success:function(data){
+              if(data.status){
+                show_tip($(".form-table"),'success','修改个人资料成功！');
+              }else{
+                show_tip($(".form-table"),'danger','修改个人资料失败，请稍后重试！');
+              } 
+            },
+            error:function(){
+              show_tip($(".form-table"),'danger','修改个人资料失败，请稍后重试！');
+            }
+          });
+        }  
+      });
+
+      //上传
+      uplaod_form($('#upload_pic'),function(data){
+        $.post("/mem/avatar",{photo: data.src},function(d){ 
+          if(d.status){
+            $("#tx-preview").attr("src",data.file_path);
+          }
+        })
+      });
+    })

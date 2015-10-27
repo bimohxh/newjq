@@ -1,0 +1,41 @@
+div.plugin-menu
+  -cache "plugin_typ"
+   ul
+     -Refcd.current('PROOTTYP').each do |item|
+       li
+         a[href="/plugins?rtyp=#{URI.encode(item.sdesc)}"] =item.sdesc
+         i.fa.fa-angle-down<
+         ul
+           -Refcd.key('PTYP',item.key).each do |subitem|
+             li
+               a[href="/plugins?typ=#{URI.encode(subitem.sdesc)}"]
+                 i.fa>[class="#{subitem.var1}"]
+                 span =subitem.sdesc
+     a.json-link[href="http://www.bejson.com/" target="_blank"] JSON在线工具
+
+  javascript:
+    $(function(){
+      var typ_timer;
+      var current_typ;
+      $(" .plugin-menu > ul > li").mouseenter(function(){
+        $(this).addClass("on").siblings().removeClass("on");
+        clearTimeout(typ_timer);
+        $('.list-typs').show();
+        $('.list-typs > ul').html($(this).find("ul").html());
+      }).mouseleave(function(){
+        current_typ = $(this);
+        typ_timer = setTimeout(function(){
+          $('.list-typs').hide();
+          current_typ.removeClass("on");
+        },100);
+      });
+
+
+      $('.list-typs').mouseenter(function(){
+        clearTimeout(typ_timer);
+        $(this).show();
+      }).mouseleave(function(){
+        $(this).hide();
+        current_typ.removeClass("on");
+      }); 
+    })   

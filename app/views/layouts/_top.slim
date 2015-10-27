@@ -1,0 +1,193 @@
+header#site-header.navbar.navbar-inverse.header-bar
+  div.container
+    /折叠按钮
+    div.navbar-header
+      button.navbar-toggle.collapsed[type="button" data-toggle="collapse" data-target="#bs-navbar-collapse"]
+        span.sr-only Toggle navigation
+        i.fa.fa-bars
+      a.navbar-brand[href="/"]: img.logo[src='/assets/logo.png']
+    /菜单
+    div#bs-navbar-collapse.collapse.navbar-collapse 
+      ul.nav.navbar-nav.navbar-right[ng-controller="SiteCtrl"]
+
+        li: a[href='/asks' title="问答"]: i.fa.fa-adn      
+        li: a[href='/codes' title="代码段"]: i.fa.fa-code
+        li: a[href='/videos' title="视频"]: i.fa.fa-video-camera
+        li: a[href='/librarys' title="前端库"]: i.fa.fa-globe 
+        li: a[href='/tools' title="工具"]: i.fa.fa-briefcase
+        li: a[href='/plugin/122' title="jQuery下载"]: i.fa.fa-download
+        li: a[href='/cdn' title="CDN加速"]: i.fa.fa-rocket 
+        li: a[href='/chm/jquery1.7.2.html' title="jQuery API" target="_blank"]: i.fa.fa-book
+        
+        -if @is_login
+          li.top-logined
+            a.tx[href="/mem"]
+              img[src="#{access_path 'mem'}#{current_mem.photo}"]
+            span: a.badge[ng-show="unread" href="/mem/msg"] {{unread}}
+
+            ul.my-dropdown
+              li: a[href='/mem/plugin/favors'] 我的收藏
+              li: a[href='/mem/following'] 我的关注
+              li: a[href='/mem/info'] 账号设置
+              li: a[href='/mem/logout'] 退出登录
+        -else    
+          li.nologin
+            div.btn-group
+              a.btn.btn-dl.open-login[href='#'] 登录
+              a.btn.btn-zc.open-singin[href='#'] 注册
+
+
+    /- 登录/注册 Modal
+    div#loginModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="LoginCtrl" ng-init="init()"]
+      =form_tag("{{form_url}}" ,id: 'loginInform') do 
+        div.modal-dialog.modal-login
+          div.modal-content
+            div.modal-header
+              button.close[type="button" data-dismiss="modal"]
+                span[aria-hidden="true"] &times;
+                span.sr-only Close
+              h4#myModalLabel.modal-title
+                span[ng-class="action == 'login' ? 'on' : ''" ng-click="switch_status('login')"] 登陆
+                span.zc[ng-class="action == 'singup' ? 'on' : ''" ng-click="switch_status('singup')"] 注册
+            div.modal-body
+              ul.form-wrap
+                li
+                  i.fa.fa-envelope
+                  input.form-control[type="text" placeholder="登陆邮箱" name="lemail" ng-show="action == 'login'"]
+                  input.form-control[type="text" placeholder="注册邮箱" name="semail" ng-show="action == 'singup'"]
+                li  
+                  i.fa.fa-unlock-alt
+                  input.form-control[type="password" placeholder="密码6位以上" name="pwd"]
+
+                li[ng-show="action == 'singup'"]  
+                  i.fa.fa-user
+                  input.form-control[type="text" placeholder="昵称" name="nc"]
+
+                li[ng-show="action == 'login'"]  
+                  input#remember[type="checkbox" name="remember"]
+                  label<[for="remember"] 自动登陆
+                  a.right[href="/pwd" target="_blank"] 忘记密码？
+
+                li: button.btn.btn-success[type="submit" ng-show="action == 'login'"] 登陆
+                li: button.btn.btn-success[type="submit" ng-show="action == 'singup'"] 注册
+
+            div.modal-footer[ng-show="action == 'login'"]
+              a.qq[href="" ng-click="third_login('/auth/qq_connect')"]
+                i.fa.fa-qq
+                span QQ帐号登陆
+
+              a.weibo[href="" ng-click="third_login('/auth/weibo')"]
+                i.fa.fa-weibo
+                span 新浪微博登陆
+
+              a.github[href="" ng-click="third_login('/auth/github')"]
+                i.fa.fa-github
+                span Github登陆
+      javascript:
+        $(function(){
+          $('#loginInform').validate({ 
+            rules:{
+              'semail':{
+                required: true,
+                email: true,
+                remote: {
+                  url: "/mem/ckemail",
+                  type: "post",
+                }
+              }, 
+              'lemail':{
+                required: true,
+                email: true,
+              }, 
+              'pwd':{required:true,minlength: 6},
+              'nc':{
+                required:true,
+                remote: {
+                  url: "/mem/cknc",
+                  type: "post",
+                }
+              },
+              
+            },
+            messages:{
+              'semail':{
+                required: '',
+                email: '',
+                remote: '该邮箱已被注册'
+              }, 
+              'lemail':'',
+              'pwd':'',
+              'nc':{
+                required: '',
+                remote: '该昵称已被占用'
+              },
+            }, 
+            submitHandler: function(form) {
+              $(form).ajaxSubmit({
+                success:function(data){
+                  if(data.status){
+                    window.location.reload();
+                  }else{
+                    show_tip($(".form-wrap"),'danger','操作失败，'+ data.tip);
+                  } 
+                },
+                error:function(){
+                  show_tip($(".form-wrap"),'danger','操作失败，请稍后重试！');
+                }
+              });
+            }  
+          });
+        })                
+          
+   
+    /- 完善信息 Modal    
+    div#MemInfoModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" backdrop="false" keyboard="false"] 
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            h4#myModalLabel.modal-title 
+              i.fa.fa-user>
+              span 个人信息完善
+          div.modal-body
+            a.btn.btn-success[href="/mem/info"] 点击完善信息
+
+          div.modal-footer
+            span 为了更好地使用网站功能，请完善您的个人信息。
+      
+      javascript:
+        $(function(){
+          $('#infoInform').validate({ 
+            rules:{
+              'mem[email]':{
+                required: true,
+                email: true,
+                remote: {
+                  url: "/mem/ckemail",
+                  type: "post",
+                }
+              },
+              'mem[pwd]':{required:true,minlength: 6},
+              'mem[nc]':{
+                required:true,
+                remote: {
+                  url: "/mem/cknc",
+                  type: "post",
+                }
+              },
+            },
+            messages:{
+              'mem[email]':{
+                required: '邮箱不能为空',
+                email: '邮箱格式不正确',
+                remote: '该邮箱已被注册'
+              }, 
+              'mem[pwd]':'密码必须大于6位',
+              'mem[nc]':{
+                required: '昵称不能为空',
+                remote: '该昵称已被占用'
+              },
+            } 
+          });
+        })        
+  
+  
