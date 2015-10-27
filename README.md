@@ -1,7 +1,6 @@
 # newjq
 A jQuery plugin collection website
 
-
 ## Requirements
 
 * Ruby 2.2.0 +
@@ -55,4 +54,5 @@ $ rails s -b 0.0.0.0
 
 ## License
 
- Newjq Released under the [MIT license](http://www.opensource.org/licenses/MIT)
+Newjq Released under the [MIT license](http://www.opensource.org/licenses/MIT)
+
